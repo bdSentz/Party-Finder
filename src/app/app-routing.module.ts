@@ -12,9 +12,21 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  }
+  },
+  { path: 'register', loadChildren: './auth/register/register.module#RegisterPageModule' },
+  { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' }
+
+
 ];
 
 @NgModule({
