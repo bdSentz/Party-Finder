@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
+import { Invite } from './invite.model';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -8,6 +10,29 @@ import { ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
+  invites: Invite[] = [
+    {
+      date: 'September, 20',
+      time: '9:00 P.M.',
+      location: '241 West Jackson Street, York PA',
+      partyType: 'Open, BYOB',
+      partyDescription: 'Party come through! Bring your friends'
+    },
+    {
+      date: 'September, 21',
+      time: '10:00 P.M.',
+      location: '267 West Jackson Street, York PA',
+      partyType: 'Mixer',
+      partyDescription: 'Party come through! Bring your friends'
+    },
+    {
+      date: 'September, 22',
+      time: '11:00 P.M.',
+      location: '290 West Jackson Street, York PA',
+      partyType: 'Invite Only',
+      partyDescription: 'Party come through! Bring your friends'
+    }
+  ];
   constructor(public toastController: ToastController) {}
 
   async presentToast() {

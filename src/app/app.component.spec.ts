@@ -59,9 +59,10 @@ describe('AppComponent', () => {
     await fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
-    expect(menuItems.length).toEqual(2);
+    expect(menuItems.length).toEqual(3);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/home');
     expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/list');
+    expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/list');
   });
 
 });
