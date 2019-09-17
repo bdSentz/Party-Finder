@@ -20,6 +20,11 @@ export class AppComponent {
       title: 'Map',
       url: '/map',
       icon: 'map'
+    },
+    {
+      title: 'Party',
+      url: '/party',
+      icon: 'beer'
     }
   ];
 
