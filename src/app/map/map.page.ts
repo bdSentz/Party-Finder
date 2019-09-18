@@ -19,8 +19,8 @@ export class MapPage implements OnInit, AfterContentInit {
     this.map = new google.maps.Map(
       this.mapElement.nativeElement,
       {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
+        center: {lat: 39.950384, lng: -76.728977},
+        zoom: 18
       }
     );
   }
