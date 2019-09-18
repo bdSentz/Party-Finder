@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="welcome-card">
+      <img src="/assets/shapes.svg" alt="" />
+      <ion-card-header>
+        <ion-card-subtitle>View Your Invites</ion-card-subtitle>
+        <ion-card-title>Welcome to Party Finder</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>View your current party invites below</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list *ngFor="let invite of invites">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-subtitle>{{ invite.location}} {{invite.date}} {{invite.time}}</ion-card-subtitle>
+                <ion-card-title>Party Invite</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>{{invite.partyDescription}}</p>
+                <ion-button (click)="presentToast()">Accept</ion-button>
+                <ion-button>Decline</ion-button>
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
+</ion-content>
