@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'party',
     loadChildren: () => import('./party/party.module').then(m => m.PartyPageModule)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule)
+  },
   { path: 'register', loadChildren: './auth/register/register.module#RegisterPageModule' },
   { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' }
 
