@@ -11,6 +11,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class HomePage {
 
+  hasVerifiedEmail = true;
+  sentTimestamp;
+
   invites: Invite[] = [
     {
       date: 'September, 20',
@@ -34,7 +37,29 @@ export class HomePage {
       partyDescription: 'Party come through! Bring your friends'
     }
   ];
-  constructor(public toastController: ToastController, public afAuth: AngularFireAuth) {}
+
+  constructor(public toastController: ToastController, public afAuth: AngularFireAuth) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
+      }
+    });
+  }
+
+  signOut() {
+    this.afAuth.auth.signOut().then(() => {
+      location.reload();
+    });
+  }
+
+  sendVerificationEmail() {
+    this.afAuth.auth.currentUser.sendEmailVerification();
+    this.sentTimestamp = new Date();
+  }
+
+  reload() {
+    window.location.reload();
+  }
 
   async presentToast() {
     const toast = await this.toastController.create({
