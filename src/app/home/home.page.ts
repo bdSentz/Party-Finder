@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
 import { Invite } from './invite.model';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,7 @@ export class HomePage {
       partyDescription: 'Party come through! Bring your friends'
     }
   ];
-  constructor(public toastController: ToastController) {}
+  constructor(public toastController: ToastController, public afAuth: AngularFireAuth) {}
 
   async presentToast() {
     const toast = await this.toastController.create({

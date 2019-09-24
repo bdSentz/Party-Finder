@@ -9,7 +9,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="afAuth.auth.currentUser == null">
+  <firebase-ui></firebase-ui>
+</ion-content>
+
+<ion-content *ngIf="afAuth.auth.currentUser != null">
     <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>

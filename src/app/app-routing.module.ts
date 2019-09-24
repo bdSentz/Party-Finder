@@ -32,7 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule)
   },
   { path: 'register', loadChildren: './auth/register/register.module#RegisterPageModule' },
-  { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' }
+  { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' },
+  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },  { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' }
+
+
 
 
 ];
