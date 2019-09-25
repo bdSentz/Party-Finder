@@ -23,10 +23,6 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule)
   },
-//  {
-//    path: 'calender',
-//    loadChildren: () => import('./calender/calender.module').then(m => m.CalenderPageModule)
-//  },
   { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
   { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' }
 ];
