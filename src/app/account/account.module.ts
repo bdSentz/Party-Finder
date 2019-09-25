@@ -5,12 +5,14 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { AccountPage } from './account.page';
+import { FirebaseUIModule } from 'firebaseui-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    FirebaseUIModule,
     RouterModule.forChild([
       {
         path: '',

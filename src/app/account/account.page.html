@@ -9,7 +9,7 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
+  <ion-content *ngIf="afAuth.auth.currentUser != null">
     <ion-item-divider>
         <ion-label>
           Name
@@ -37,4 +37,5 @@
         </ion-label>
     </ion-item>
 </ion-list>
+<ion-button (click)="signOut()">Sign Out</ion-button>
 </ion-content>

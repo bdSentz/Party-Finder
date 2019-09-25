@@ -46,19 +46,9 @@ export class HomePage {
     });
   }
 
-  signOut() {
-    this.afAuth.auth.signOut().then(() => {
-      location.reload();
-    });
-  }
-
   sendVerificationEmail() {
     this.afAuth.auth.currentUser.sendEmailVerification();
     this.sentTimestamp = new Date();
-  }
-
-  reload() {
-    window.location.reload();
   }
 
   async presentToast() {
