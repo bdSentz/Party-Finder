@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Account} from './account.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
@@ -29,7 +28,6 @@ export class AccountPage implements OnInit {
   reload() {
     window.location.reload();
   }
-
 
   ngOnInit() {
   }
