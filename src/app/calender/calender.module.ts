@@ -8,13 +8,6 @@ import { CalenderComponent } from './calender.component';
   declarations: [
     CalenderComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HttpClientJsonpModule
-  ],
-  bootstrap: [CalenderComponent]
+
 })
 export class CalenderPageModule { }
