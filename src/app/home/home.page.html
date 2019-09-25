@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="afAuth.auth.currentUser != null">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -9,7 +9,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-header *ngIf="afAuth.auth.currentUser == null">
+  <ion-toolbar>
+    <ion-title>
+      Sign In
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="afAuth.auth.currentUser == null">
+  <firebase-ui></firebase-ui>
+</ion-content>
+
+<ion-content *ngIf="afAuth.auth.currentUser != null">
     <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>

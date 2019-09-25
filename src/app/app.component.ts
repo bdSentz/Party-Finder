@@ -30,6 +30,11 @@ export class AppComponent {
       title: 'Account',
       url: '/account',
       icon: 'contact'
+    },
+    {
+      title: 'Calender',
+      url: '/calender',
+      icon: '/clipboard'
     }
   ];
 
