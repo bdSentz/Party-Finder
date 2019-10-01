@@ -6,5 +6,4 @@ export interface Account {
     year: string;
     houseOwner: boolean;
     address: string;
-
 }
