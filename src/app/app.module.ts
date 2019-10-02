@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 
 import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 
@@ -38,6 +39,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
   providers: [
