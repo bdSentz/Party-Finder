@@ -24,7 +24,7 @@ export class AccountPage implements OnInit {
     {
       email: 'fakeemail@gmail.com',
       name: 'Bob',
-      userName: 'username',
+      userName: this.userName,
       ID: 12345,
       year: '2019',
       houseOwner: false,
@@ -35,6 +35,7 @@ export class AccountPage implements OnInit {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
+        this.userName = this.afAuth.auth.currentUser.email;
       }
     });
   }
@@ -56,7 +57,7 @@ export class AccountPage implements OnInit {
           id: e.payload.doc.id,
           isEdit: false,
           // tslint:disable-next-line: no-string-literal
-          Name: e.payload.doc.data()['Name'],
+          Name: this.userName,
           // tslint:disable-next-line: no-string-literal
           Address: e.payload.doc.data()['Address'],
         };

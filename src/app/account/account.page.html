@@ -38,5 +38,12 @@
         </ion-label>
     </ion-item>
 </ion-list>
+<ion-item>
+  <ion-input placeholder="Enter Address" [(ngModel)]="userAddress"></ion-input>
+</ion-item>
+<ion-button (click)="CreateRecord()" [disabled]="!userAddress">
+  <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+  &nbsp;Create Record
+</ion-button>
 <ion-button (click)="signOut()">Sign Out</ion-button>
 </ion-content>
