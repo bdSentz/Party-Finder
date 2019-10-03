@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MonthViewComponent } from 'ionic2-calendar/monthview';
 
 @Component({
   templateUrl: 'calendar.page.html',
@@ -12,9 +13,10 @@ export class CalendarPage {
   calendar = {
     mode: 'month',
     currentDate: new Date(),
-  };
+};
+  
   selectedDate = new Date();
-
+  viewTitle;
   constructor(private db: AngularFirestore,) {
     this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
       this.eventSource = [];
@@ -46,6 +48,7 @@ export class CalendarPage {
 
   onViewTitleChanged(title) {
     console.log(title);
+    this.viewTitle = title;
   }
 
   onEventSelected(event) {
