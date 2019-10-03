@@ -32,9 +32,9 @@ export class AppComponent {
       icon: 'contact'
     },
     {
-      title: 'Calender',
-      url: '/calender',
-      icon: '/clipboard'
+      title: 'Calendar',
+      url: '/calendar',
+      icon: 'clipboard'
     }
   ];
 
