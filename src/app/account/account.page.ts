@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { Account } from './account.model';
@@ -10,33 +10,31 @@ import { CrudService } from './../service/crud.service';
     templateUrl: 'account.page.html',
     styleUrls: ['account.page.scss'],
 })
-export class AccountPage implements OnInit {
+export class AccountPage {
 
   hasVerifiedEmail = true;
   sentTimestamp;
 
-  users: any;
-  userName: string;
-  userAddress: string;
+  account: Account =
+  {
+    uid: '',
+    email: '',
+    name: '',
+    houseOwner: false,
+    address: '',
+  };
 
   /* Temporary account info until we have functional database*/
-  account: Account =
-    {
-      email: 'fakeemail@gmail.com',
-      name: 'Bob',
-      userName: this.userName,
-      ID: 12345,
-      year: '2019',
-      houseOwner: false,
-      address: 'blank'
-    };
 
   constructor(public afAuth: AngularFireAuth, private crudService: CrudService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
-        this.userName = this.afAuth.auth.currentUser.email;
+        this.account.email = this.afAuth.auth.currentUser.email;
+        this.account.name = this.afAuth.auth.currentUser.displayName;
+        this.account.uid = this.afAuth.auth.currentUser.uid;
       }
+      this.getUserInfo();
     });
   }
 
@@ -50,19 +48,19 @@ export class AccountPage implements OnInit {
     window.location.reload();
   }
 
-  ngOnInit() {
-    this.crudService.readUsers().subscribe(data => {
-      this.users = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          isEdit: false,
-          // tslint:disable-next-line: no-string-literal
-          Name: this.userName,
-          // tslint:disable-next-line: no-string-literal
-          Address: e.payload.doc.data()['Address'],
-        };
-      });
-      console.log(this.users);
+  getUserInfo() {
+    const userDocumentRef = this.crudService.getUserDocument(this.account.uid);
+    const getDoc = userDocumentRef.get().then(doc => {
+      if (!doc.exists) {
+        console.log('No Doc exists');
+        this.CreateRecord();
+      } else {
+        this.account.houseOwner = doc.get('HouseOwner');
+        this.account.address = doc.get('Address');
+      }
+    })
+    .catch(err => {
+      console.log('Error getting document', err);
     });
   }
 
@@ -70,17 +68,20 @@ export class AccountPage implements OnInit {
     // tslint:disable-next-line: prefer-const
     let record = {};
     // tslint:disable-next-line: no-string-literal
-    record['Name'] = this.userName;
+    record['Name'] = this.account.name;
     // tslint:disable-next-line: no-string-literal
-    record['Address'] = this.userAddress;
-    this.crudService.createNewUser(record).then(resp => {
-      this.userName = '';
-      this.userAddress = '';
+    record['Email'] = this.account.email;
+    // tslint:disable-next-line: no-string-literal
+    record['Address'] = this.account.address;
+    // tslint:disable-next-line: no-string-literal
+    record['HouseOwner'] = false;
+    this.crudService.createNewUser(this.account.uid, record).then(resp => {
+      this.account.address = '';
       console.log(resp);
     })
-      .catch(error => {
-        console.log(error);
-      });
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   RemoveRecord(rowID) {
@@ -94,14 +95,11 @@ export class AccountPage implements OnInit {
     record.EditAddress = record.Address;
   }
 
-  UpdateRecord(recordRow) {
+  UpdateRecord() {
     // tslint:disable-next-line: prefer-const
     let record = {};
     // tslint:disable-next-line: no-string-literal
-    record['Name'] = recordRow.EditName;
-    // tslint:disable-next-line: no-string-literal
-    record['Address'] = recordRow.EditAddress;
-    this.crudService.updateUsers(recordRow.id, record);
-    recordRow.isEdit = false;
+    record['Address'] = this.account.address;
+    this.crudService.updateUser(this.account.uid, record);
   }
 }

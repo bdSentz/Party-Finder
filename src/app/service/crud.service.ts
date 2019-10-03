@@ -12,15 +12,15 @@ export class CrudService {
     private firestore: AngularFirestore
   ) { }
 
-  createNewUser(record) {
-    return this.firestore.collection('users').add(record);
+  createNewUser(uid, record) {
+    return this.firestore.collection('users').doc(uid).set(record);
   }
 
-  readUsers() {
-    return this.firestore.collection('users').snapshotChanges();
+  getUserDocument(uid) {
+    return this.firestore.collection('users').doc(uid).ref;
   }
 
-  updateUsers(recordID, record) {
+  updateUser(recordID, record) {
     this.firestore.doc('users/' + recordID).update(record);
   }
 
