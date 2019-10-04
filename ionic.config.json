@@ -1,5 +1,7 @@
 {
   "name": "party-finder",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
