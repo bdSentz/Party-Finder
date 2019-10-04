@@ -12,14 +12,6 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
-  },
-  {
     path: 'map',
     loadChildren: () => import('./map/map.module').then(m => m.MapPageModule)
   },
@@ -31,10 +23,12 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule)
   },
-  { path: 'register', loadChildren: './auth/register/register.module#RegisterPageModule' },
-  { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' }
-
-
+  {
+    path: 'calendar',
+    loadChildren: () => import('./calendar/calendar.module').then(m=> m.CalendarPageModule)
+  },
+  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
+  { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' }
 ];
 
 @NgModule({

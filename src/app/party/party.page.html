@@ -9,7 +9,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content fullscreen>
+  <ion-content *ngIf="afAuth.auth.currentUser != null" fullscreen>
     <ion-list>
       <ion-item>
         <ion-input placeholder="Title"></ion-input>

@@ -10,7 +10,8 @@ export class MapPage implements OnInit, AfterContentInit {
   map;
 
   @ViewChild('mapElement', {static: true}) mapElement;
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
   }
