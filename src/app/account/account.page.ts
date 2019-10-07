@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { Account } from './account.model';
+import { Account } from '../account.model';
 
 import { CrudService } from './../service/crud.service';
+import { DataService } from './../service/data.service';
 
 @Component({
     selector: 'app-account',
@@ -24,9 +25,7 @@ export class AccountPage {
     address: '',
   };
 
-  /* Temporary account info until we have functional database*/
-
-  constructor(public afAuth: AngularFireAuth, private crudService: CrudService) {
+  constructor(public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
@@ -36,6 +35,7 @@ export class AccountPage {
       }
       this.getUserInfo();
     });
+    dataService.setData('Account', this.account);
   }
 
   signOut() {

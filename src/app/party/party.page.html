@@ -15,7 +15,7 @@
         <ion-input placeholder="Title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Location"></ion-input>
+        <ion-input placeholder="Location" [(ngModel)]="party.address"></ion-input>
       </ion-item>
       <ion-item-divider></ion-item-divider>
       <ion-item>
@@ -31,9 +31,11 @@
         <ion-datetime value="2019-01-01" placeholder="Select Date"></ion-datetime>
       </ion-item>
       <ion-item>
-        <ion-label>Party Description</ion-label>
-        <ion-textarea auto-grow="true" placeholder="None"></ion-textarea>
+        <ion-input placeholder="Party Description" [(ngModel)]="party.description"></ion-input>
       </ion-item>
-      <ion-item-divider></ion-item-divider>
     </ion-list>
+    <ion-button (click)="CreatePartyRecord()">
+        <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+        &nbsp;Create Party
+    </ion-button>
   </ion-content>
