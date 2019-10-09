@@ -27,4 +27,16 @@ export class CrudService {
   deleteUser(recordID) {
     this.firestore.doc('users/' + recordID).delete();
   }
+
+  createNewParty(record) {
+    return this.firestore.collection('events').add(record);
+  }
+
+  updateParty(recordID, record) {
+    this.firestore.doc('events/' + recordID).update(record);
+  }
+
+  deleteParty(recordID) {
+    this.firestore.doc('events/' + recordID).delete();
+  }
 }
