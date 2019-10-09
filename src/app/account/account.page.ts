@@ -74,7 +74,7 @@ export class AccountPage {
     // tslint:disable-next-line: no-string-literal
     record['Address'] = this.account.address;
     // tslint:disable-next-line: no-string-literal
-    record['HouseOwner'] = false;
+    record['HouseOwner'] = this.account.houseOwner;
     this.crudService.createNewUser(this.account.uid, record).then(resp => {
       this.account.address = '';
       console.log(resp);
@@ -100,6 +100,8 @@ export class AccountPage {
     let record = {};
     // tslint:disable-next-line: no-string-literal
     record['Address'] = this.account.address;
+    // tslint:disable-next-line: no-string-literal
+    record['HouseOwner'] = this.account.houseOwner;
     this.crudService.updateUser(this.account.uid, record);
   }
 }

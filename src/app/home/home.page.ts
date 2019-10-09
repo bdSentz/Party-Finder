@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
-import { Invite } from './invite.model';
+import { Invite } from '../invite.model';
+import { Account } from '../account.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+
+import { CrudService } from './../service/crud.service';
+import { DataService } from './../service/data.service';
+import { Party } from '../party.model';
 
 @Component({
   selector: 'app-home',
@@ -14,35 +19,70 @@ export class HomePage {
   hasVerifiedEmail = true;
   sentTimestamp;
 
-  invites: Invite[] = [
-    {
-      date: 'September, 20',
-      time: '9:00 P.M.',
-      location: '241 West Jackson Street, York PA',
-      partyType: 'Open, BYOB',
-      partyDescription: 'Party come through! Bring your friends'
-    },
-    {
-      date: 'September, 21',
-      time: '10:00 P.M.',
-      location: '267 West Jackson Street, York PA',
-      partyType: 'Mixer',
-      partyDescription: 'Party come through! Bring your friends'
-    },
-    {
-      date: 'September, 22',
-      time: '11:00 P.M.',
-      location: '290 West Jackson Street, York PA',
-      partyType: 'Invite Only',
-      partyDescription: 'Party come through! Bring your friends'
-    }
-  ];
+  account: Account =
+  {
+    uid: '',
+    email: '',
+    name: '',
+    houseOwner: false,
+    address: '',
+  };
 
-  constructor(public toastController: ToastController, public afAuth: AngularFireAuth) {
+  parties: Party[];
+
+  // tslint:disable-next-line: max-line-length
+  constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
+        this.account.email = this.afAuth.auth.currentUser.email;
+        this.account.name = this.afAuth.auth.currentUser.displayName;
+        this.account.uid = this.afAuth.auth.currentUser.uid;
       }
+      this.getUserInfo();
+    });
+    dataService.setData('Account', this.account);
+
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.parties = this.crudService.getPartyForUser(this.account.email);
+      }
+    });
+  }
+
+  getUserInfo() {
+    const userDocumentRef = this.crudService.getUserDocument(this.account.uid);
+    const getDoc = userDocumentRef.get().then(doc => {
+      if (!doc.exists) {
+        console.log('No Doc exists');
+        this.CreateRecord();
+      } else {
+        this.account.houseOwner = doc.get('HouseOwner');
+        this.account.address = doc.get('Address');
+      }
+    })
+    .catch(err => {
+      console.log('Error getting document', err);
+    });
+  }
+
+  CreateRecord() {
+    // tslint:disable-next-line: prefer-const
+    let record = {};
+    // tslint:disable-next-line: no-string-literal
+    record['Name'] = this.account.name;
+    // tslint:disable-next-line: no-string-literal
+    record['Email'] = this.account.email;
+    // tslint:disable-next-line: no-string-literal
+    record['Address'] = this.account.address;
+    // tslint:disable-next-line: no-string-literal
+    record['HouseOwner'] = this.account.houseOwner;
+    this.crudService.createNewUser(this.account.uid, record).then(resp => {
+      this.account.address = '';
+      console.log(resp);
+    })
+    .catch(error => {
+      console.log(error);
     });
   }
 

@@ -33,14 +33,14 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-list *ngFor="let invite of invites">
+    <ion-list *ngFor="let party of parties">
         <ion-card>
             <ion-card-header>
-                <ion-card-subtitle>{{ invite.location}} {{invite.date}} {{invite.time}}</ion-card-subtitle>
+                <ion-card-subtitle>{{ party.address}}</ion-card-subtitle>
                 <ion-card-title>Party Invite</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                <p>{{invite.partyDescription}}</p>
+                <p>{{party.description}}</p>
                 <ion-button (click)="presentToast()">Accept</ion-button>
                 <ion-button>Decline</ion-button>
             </ion-card-content>
