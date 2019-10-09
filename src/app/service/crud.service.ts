@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Party } from '../party.model';
+import { PartyPageModule } from '../party/party.module';
 
 @Injectable({
   providedIn: 'root'
@@ -39,4 +41,36 @@ export class CrudService {
   deleteParty(recordID) {
     this.firestore.doc('events/' + recordID).delete();
   }
+
+  getPartyForUser(userEmail): Party[] {
+    let parties: Party[] = [];
+    this.firestore.collection('events', ref => ref.where('invitees', 'array-contains', userEmail)).ref.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      let counter = 0;
+      snapshot.forEach(doc => {
+        counter++;
+        let invite: Party = {
+          address: doc.get('Address'),
+          description: doc.get('Description'),
+          invitees: []
+        };
+        parties.push(invite);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    return parties;
+  }
+
+  /*
+  formatDate(date: Date): string {
+    const day = date.getDate;
+    const month = date.getMonth;
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }*/
 }
