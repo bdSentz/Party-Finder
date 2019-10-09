@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MonthViewComponent } from 'ionic2-calendar/monthview';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   templateUrl: 'calendar.page.html',
@@ -17,7 +18,7 @@ export class CalendarPage {
   
   selectedDate = new Date();
   viewTitle;
-  constructor(private db: AngularFirestore,) {
+  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
     this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
       this.eventSource = [];
       colSnap.forEach(snap => {
@@ -28,6 +29,12 @@ export class CalendarPage {
         console.log(event);
         this.eventSource.push(event);
       });
+    });
+  }
+
+  signOut() {
+    this.afAuth.auth.signOut().then(() => {
+      location.reload();
     });
   }
 
