@@ -44,7 +44,7 @@ export class CalendarPage {
     end.setMinutes(end.getMinutes() + 60);
 
     let event = {
-      title: 'Event #' + start.getMinutes(),
+      title: 'Event ',
       startTime: start,
       endTime: end,
       allDay: false,
