@@ -21,7 +21,7 @@
           <ion-label>House Owner</ion-label>
           <ion-toggle [(ngModel)]="account.houseOwner"></ion-toggle>
         </ion-item>
-        <ion-item><ion-input placeholder="Address" [(ngModel)]="account.address"></ion-input></ion-item>
+        <ion-item *ngIf="account.houseOwner == true"><ion-input placeholder="Address" [(ngModel)]="account.address"></ion-input></ion-item>
         <ion-item><ion-label>Groups: 
             <ion-item-group>
                 <ion-item>
@@ -38,9 +38,16 @@
         </ion-label>
     </ion-item>
 </ion-list>
-<ion-button (click)="UpdateRecord()">
-  <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
-  &nbsp;Save
-</ion-button>
-<ion-button (click)="signOut()">Sign Out</ion-button>
+<ion-row center>  
+  <ion-col text-center>   
+    <ion-button (click)="UpdateRecord()">
+      <ion-icon size="small" slot="icon-only" name="save"></ion-icon>
+      &nbsp;Save
+    </ion-button>
+    <ion-button (click)="signOut()">
+      <ion-icon size="small" slot="icon-only" name="log-out"></ion-icon>
+      &nbsp;Log Out
+    </ion-button>
+  </ion-col> 
+</ion-row>
 </ion-content>
