@@ -26,6 +26,7 @@ export class CalendarPage {
         event.startTime = event.startTime.toDate();
         event.endTime = event.endTime.toDate();
         event.allDay = false;
+        event.title = event.title;
         console.log(event);
         this.eventSource.push(event);
       });

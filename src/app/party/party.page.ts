@@ -21,6 +21,7 @@ export class PartyPage implements OnInit {
     description: '',
     startTime: '',
     endTime: '',
+    startDate: '',
     title: ''
   };
 
@@ -46,9 +47,9 @@ export class PartyPage implements OnInit {
     // tslint:disable-next-line: no-string-literal
     record['Title'] = this.party.title;
     // tslint:disable-next-line: no-string-literal
-    record['startTime'] = this.party.startTime;
+    record['startTime'] = new Date(this.party.startTime);
     // tslint:disable-next-line: no-string-literal
-    record['endTime'] = this.party.endTime;
+    record['endTime'] = new Date(this.party.endTime);
     this.crudService.createNewParty(record).then(resp => {
       console.log(resp);
     })

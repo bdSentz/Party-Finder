@@ -5,4 +5,5 @@ export interface Party {
     startTime: string;
     endTime: string;
     title: string;
+    startDate: string;
 }
