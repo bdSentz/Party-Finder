@@ -55,6 +55,9 @@ export class CrudService {
         let invite: Party = {
           address: doc.get('Address'),
           description: doc.get('Description'),
+          title: doc.get('Title'),
+          startTime: doc.get('startTime'),
+          endTime: doc.get('endTime'),
           invitees: []
         };
         parties.push(invite);
