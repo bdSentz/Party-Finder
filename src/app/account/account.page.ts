@@ -35,7 +35,7 @@ export class AccountPage {
       }
       this.getUserInfo();
     });
-    dataService.setData('Account', this.account);
+    dataService.setAccountData(this.account);
   }
 
   signOut() {

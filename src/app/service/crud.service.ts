@@ -44,7 +44,7 @@ export class CrudService {
 
   getPartyForUser(userEmail): Party[] {
     let parties: Party[] = [];
-    this.firestore.collection('events', ref => ref.where('Invitees', '==', userEmail)).ref.get()
+    this.firestore.collection('events', ref => ref.where('invitees', '==', userEmail)).ref.get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');
@@ -52,10 +52,10 @@ export class CrudService {
       let counter = 0;
       snapshot.forEach(doc => {
         counter++;
-        if (doc.get('Invitees') === userEmail){
+        if (doc.get('invitees') === userEmail){
           let invite: Party = {
-            address: doc.get('Address'),
-            description: doc.get('Description'),
+            address: doc.get('address'),
+            description: doc.get('description'),
             invitees: []
           };
           parties.push(invite);

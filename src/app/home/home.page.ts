@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { CrudService } from './../service/crud.service';
 import { DataService } from './../service/data.service';
 import { Party } from '../party.model';
+import { AccountPage } from '../account/account.page';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomePage {
     email: '',
     name: '',
     houseOwner: false,
-    address: '',
+    address: ''
   };
 
   parties: Party[];
@@ -38,24 +39,27 @@ export class HomePage {
         this.account.email = this.afAuth.auth.currentUser.email;
         this.account.name = this.afAuth.auth.currentUser.displayName;
         this.account.uid = this.afAuth.auth.currentUser.uid;
-      }
-      this.getUserInfo();
-    });
-    dataService.setData('Account', this.account);
-
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
         this.parties = this.crudService.getPartyForUser(this.account.email);
       }
+      // Get account data from database for current user if it exists. If not create database document for the user
+      this.getUserInfo();
     });
+    // Set singleton account value so other pages can access account data
+    dataService.setAccountData(this.account);
   }
 
   getUserInfo() {
     const userDocumentRef = this.crudService.getUserDocument(this.account.uid);
     const getDoc = userDocumentRef.get().then(doc => {
+      // If no document exists in database for the current user, create one
       if (!doc.exists) {
-        console.log('No Doc exists');
-        this.CreateRecord();
+        this.crudService.createNewUser(this.account.uid, this.account).then(resp => {
+          this.account.address = '';
+          console.log(resp);
+        })
+        .catch(error => {
+          console.log(error);
+        });
       } else {
         this.account.houseOwner = doc.get('HouseOwner');
         this.account.address = doc.get('Address');
@@ -63,26 +67,6 @@ export class HomePage {
     })
     .catch(err => {
       console.log('Error getting document', err);
-    });
-  }
-
-  CreateRecord() {
-    // tslint:disable-next-line: prefer-const
-    let record = {};
-    // tslint:disable-next-line: no-string-literal
-    record['Name'] = this.account.name;
-    // tslint:disable-next-line: no-string-literal
-    record['Email'] = this.account.email;
-    // tslint:disable-next-line: no-string-literal
-    record['Address'] = this.account.address;
-    // tslint:disable-next-line: no-string-literal
-    record['HouseOwner'] = this.account.houseOwner;
-    this.crudService.createNewUser(this.account.uid, record).then(resp => {
-      this.account.address = '';
-      console.log(resp);
-    })
-    .catch(error => {
-      console.log(error);
     });
   }
 

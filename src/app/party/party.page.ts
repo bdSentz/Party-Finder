@@ -27,19 +27,13 @@ export class PartyPage implements OnInit {
         this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
       }
     });
-    this.account = dataService.getData('Account');
+    this.account = dataService.getAccountData();
     this.party.address = this.account.address;
   }
 
   CreatePartyRecord() {
     // tslint:disable-next-line: prefer-const
-    let record = {};
-    // tslint:disable-next-line: no-string-literal
-    record['Address'] = this.party.address;
-    // tslint:disable-next-line: no-string-literal
-    record['Invitees'] = this.party.invitees;
-    // tslint:disable-next-line: no-string-literal
-    record['Description'] = this.party.description;
+    let record = this.party;
     this.crudService.createNewParty(record).then(resp => {
       console.log(resp);
     })
