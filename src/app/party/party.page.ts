@@ -18,7 +18,10 @@ export class PartyPage implements OnInit {
   {
     address: '',
     invitees: [''],
-    description: ''
+    description: '',
+    startTime: '',
+    endTime: '',
+    startDate: '',
   };
 
   constructor(public afAuth: AngularFireAuth, private dataService: DataService, private crudService: CrudService) {
@@ -33,7 +36,19 @@ export class PartyPage implements OnInit {
 
   CreatePartyRecord() {
     // tslint:disable-next-line: prefer-const
-    let record = this.party;
+    let record = {};
+    // tslint:disable-next-line: no-string-literal
+    record['Address'] = this.party.address;
+    // tslint:disable-next-line: no-string-literal
+    record['Invitees'] = this.party.invitees;
+    // tslint:disable-next-line: no-string-literal
+    record['Description'] = this.party.description;
+    // tslint:disable-next-line: no-string-literal
+    record['Title'] = this.party.title;
+    // tslint:disable-next-line: no-string-literal
+    record['startTime'] = new Date(this.party.startTime);
+    // tslint:disable-next-line: no-string-literal
+    record['endTime'] = new Date(this.party.endTime);
     this.crudService.createNewParty(record).then(resp => {
       console.log(resp);
     })

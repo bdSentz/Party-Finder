@@ -15,14 +15,16 @@
         <ion-input disabled="true" placeholder="Location" [(ngModel)]="party.address"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Start Date</ion-label>
-        <ion-datetime value="2019-02-19" placeholder="Select Date"></ion-datetime>
+        <ion-input placeholder="Location" [(ngModel)]="party.address"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Start Time</ion-label>
-        <ion-datetime display-format="h:mm A" picker-format="h:mm A" value="2019-01-01T09:00Z"></ion-datetime>
+          <ion-label>Start</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="party.startTime" [min]="minDate"></ion-datetime>
+        </ion-item>
+      <ion-item><ion-label>End</ion-label>
+        <ion-datetime value="2019-02-19" placeholder="select Date" [(ngModel)]="party.endTime"></ion-datetime>
       </ion-item>
-      <ion-item>
+        <ion-item>
         <ion-input placeholder="Party Description" [(ngModel)]="party.description"></ion-input>
       </ion-item>
       <ion-item>

@@ -52,14 +52,15 @@ export class CrudService {
       let counter = 0;
       snapshot.forEach(doc => {
         counter++;
-        if (doc.get('invitees') === userEmail){
-          let invite: Party = {
-            address: doc.get('address'),
-            description: doc.get('description'),
-            invitees: []
-          };
-          parties.push(invite);
-        }
+        let invite: Party = {
+          address: doc.get('Address'),
+          description: doc.get('Description'),
+          startTime: doc.get('startTime'),
+          endTime: doc.get('endTime'),
+          startDate: doc.get('startDate'),
+          invitees: []
+        };
+        parties.push(invite);
       });
     })
     .catch(err => {
