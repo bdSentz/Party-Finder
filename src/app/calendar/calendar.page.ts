@@ -26,31 +26,12 @@ export class CalendarPage {
         event.id = snap.payload.doc.id;
         event.startTime = event.startTime.toDate();
         event.endTime = event.endTime.toDate();
+        event.allDay = false;
+        event.title = event.title;
         console.log(event);
         this.eventSource.push(event);
       });
     });
-  }
-
-  signOut() {
-    this.afAuth.auth.signOut().then(() => {
-      location.reload();
-    });
-  }
-
-  addNewEvent() {
-    let start = this.selectedDate;
-    let end = this.selectedDate;
-    end.setMinutes(end.getMinutes() + 60);
-
-    let event = {
-      title: 'Event ',
-      startTime: start,
-      endTime: end,
-      allDay: false,
-    };
-
-    this.db.collection(`events`).add(event);
   }
 
   onViewTitleChanged(title) {

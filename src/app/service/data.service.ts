@@ -17,4 +17,13 @@ export class DataService {
   getData(id) {
     return this.data[id];
   }
+
+  setAccountData(data) {
+    this.setData('Account', data);
+  }
+
+  getAccountData() {
+    // tslint:disable-next-line: no-string-literal
+    return this.getData('Account');
+  }
 }

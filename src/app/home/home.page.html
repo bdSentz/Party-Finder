@@ -36,8 +36,8 @@
     <ion-list *ngFor="let party of parties">
         <ion-card>
             <ion-card-header>
-                <ion-card-subtitle>{{ party.address}}</ion-card-subtitle>
-                <ion-card-title>Party Invite</ion-card-title>
+                <ion-card-subtitle>{{party.startTime}} to {{party.endTime}}</ion-card-subtitle>
+                <ion-card-title>Party at {{party.address}} </ion-card-title>
             </ion-card-header>
             <ion-card-content>
                 <p>{{party.description}}</p>

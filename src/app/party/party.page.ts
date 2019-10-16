@@ -4,50 +4,60 @@ import { Party } from '../party.model';
 import { CrudService } from './../service/crud.service';
 import { Account } from '../account.model';
 import { DataService } from '../service/data.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   templateUrl: 'party.page.html'
 })
 export class PartyPage implements OnInit {
-
-  hasVerifiedEmail = true;
-  sentTimestamp;
   account: Account;
 
   party: Party =
   {
-    address: '',
+    address: null,
     invitees: [''],
-    description: ''
+    description: null,
+    startTime: null,
+    endTime: null,
   };
 
-  constructor(public afAuth: AngularFireAuth, private dataService: DataService, private crudService: CrudService) {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
-      }
-    });
-    this.account = dataService.getData('Account');
+  constructor(private dataService: DataService, private crudService: CrudService, public toastController: ToastController) {
+    this.account = dataService.getAccountData();
     this.party.address = this.account.address;
   }
 
-  CreatePartyRecord() {
+  async CreatePartyRecord() {
     // tslint:disable-next-line: prefer-const
-    let record = {};
-    // tslint:disable-next-line: no-string-literal
-    record['Address'] = this.party.address;
-    // tslint:disable-next-line: no-string-literal
-    record['Invitees'] = this.party.invitees;
-    // tslint:disable-next-line: no-string-literal
-    record['Description'] = this.party.description;
-    this.crudService.createNewParty(record).then(resp => {
-      console.log(resp);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    let record = this.party;
+    if (record.address == null || record.description == null || record.startTime == null) {
+      this.presentToast(false);
+    } else {
+      this.crudService.createNewParty(record).then(resp => {
+        this.presentToast(true);
+        console.log(resp);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
   }
 
   ngOnInit() {
+  }
+
+  async presentToast(Bool) {
+    if (!Bool) {
+      const toast = await this.toastController.create({
+        message: 'Fill in all necessary fields',
+        duration: 2000
+      });
+      toast.present();
+    } else {
+      const toast = await this.toastController.create({
+        message: 'You successfully created a party!',
+        duration: 2000
+      });
+      toast.present();
+    }
   }
 }
