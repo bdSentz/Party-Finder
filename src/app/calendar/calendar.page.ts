@@ -18,16 +18,16 @@ export class CalendarPage {
   
   selectedDate = new Date();
   viewTitle;
-  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
+  constructor(private db: AngularFirestore) {
     this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
       this.eventSource = [];
       colSnap.forEach(snap => {
         let event:any = snap.payload.doc.data();
         event.id = snap.payload.doc.id;
-        event.startTime = event.startTime.toDate();
-        event.endTime = event.endTime.toDate();
+        event.startTime = new Date(event.startTime);
+        event.endTime = new Date(event.endTime);
         event.allDay = false;
-        event.title = event.title;
+        event.title = event.description;
         console.log(event);
         this.eventSource.push(event);
       });
