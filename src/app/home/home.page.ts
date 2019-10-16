@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
-import { Invite } from '../invite.model';
 import { Account } from '../account.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 
