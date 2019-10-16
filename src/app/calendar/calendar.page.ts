@@ -15,7 +15,7 @@ export class CalendarPage {
     mode: 'month',
     currentDate: new Date(),
 };
-  
+
   selectedDate = new Date();
   viewTitle;
   constructor(private db: AngularFirestore) {
@@ -56,5 +56,4 @@ export class CalendarPage {
   onRangeChanged(ev) {
     console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
   }
-
 }
