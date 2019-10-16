@@ -16,10 +16,10 @@
       </ion-item>
       <ion-item>
           <ion-label>Start</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="party.startTime"></ion-datetime>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" placeholder="Start Time" [(ngModel)]="party.startTime"></ion-datetime>
         </ion-item>
       <ion-item><ion-label>End</ion-label>
-        <ion-datetime value="2019-02-19" placeholder="select Date" [(ngModel)]="party.endTime"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" placeholder="End Time" [(ngModel)]="party.endTime"></ion-datetime>
       </ion-item>
         <ion-item>
         <ion-input placeholder="Party Description" [(ngModel)]="party.description"></ion-input>
@@ -28,8 +28,12 @@
         <ion-input inputmode="email" multiple=true placeholder="Invitees" [(ngModel)]="party.invitees"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-button (click)="CreatePartyRecord()">
-        <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
-        &nbsp;Create Party
-    </ion-button>
+    <ion-row center>
+      <ion-col text-center>  
+        <ion-button (click)="CreatePartyRecord()">
+            <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+            &nbsp;Create Party
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-content>

@@ -4,5 +4,4 @@ export interface Party {
     description: string;
     startTime: string;
     endTime: string;
-    startDate: string;
 }

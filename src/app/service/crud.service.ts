@@ -58,7 +58,6 @@ export class CrudService {
             description: doc.get('description'),
             startTime: doc.get('startTime'),
             endTime: doc.get('endTime'),
-            startDate: doc.get('startDate'),
             invitees: []
           };
           parties.push(invite);
