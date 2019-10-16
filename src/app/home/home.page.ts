@@ -8,7 +8,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { CrudService } from './../service/crud.service';
 import { DataService } from './../service/data.service';
 import { Party } from '../party.model';
-import { AccountPage } from '../account/account.page';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +15,6 @@ import { AccountPage } from '../account/account.page';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  hasVerifiedEmail = true;
-  sentTimestamp;
 
   account: Account =
   {
@@ -35,7 +31,6 @@ export class HomePage {
   constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
         this.account.email = this.afAuth.auth.currentUser.email;
         this.account.name = this.afAuth.auth.currentUser.displayName;
         this.account.uid = this.afAuth.auth.currentUser.uid;
@@ -68,11 +63,6 @@ export class HomePage {
     .catch(err => {
       console.log('Error getting document', err);
     });
-  }
-
-  sendVerificationEmail() {
-    this.afAuth.auth.currentUser.sendEmailVerification();
-    this.sentTimestamp = new Date();
   }
 
   async presentToast() {

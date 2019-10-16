@@ -9,9 +9,6 @@ import { DataService } from '../service/data.service';
   templateUrl: 'party.page.html'
 })
 export class PartyPage implements OnInit {
-
-  hasVerifiedEmail = true;
-  sentTimestamp;
   account: Account;
 
   party: Party =
@@ -24,31 +21,14 @@ export class PartyPage implements OnInit {
     startDate: '',
   };
 
-  constructor(public afAuth: AngularFireAuth, private dataService: DataService, private crudService: CrudService) {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
-      }
-    });
+  constructor(private dataService: DataService, private crudService: CrudService) {
     this.account = dataService.getAccountData();
     this.party.address = this.account.address;
   }
 
   CreatePartyRecord() {
     // tslint:disable-next-line: prefer-const
-    let record = {};
-    // tslint:disable-next-line: no-string-literal
-    record['Address'] = this.party.address;
-    // tslint:disable-next-line: no-string-literal
-    record['Invitees'] = this.party.invitees;
-    // tslint:disable-next-line: no-string-literal
-    record['Description'] = this.party.description;
-    // tslint:disable-next-line: no-string-literal
-    record['Title'] = this.party.title;
-    // tslint:disable-next-line: no-string-literal
-    record['startTime'] = new Date(this.party.startTime);
-    // tslint:disable-next-line: no-string-literal
-    record['endTime'] = new Date(this.party.endTime);
+    let record = this.party;
     this.crudService.createNewParty(record).then(resp => {
       console.log(resp);
     })

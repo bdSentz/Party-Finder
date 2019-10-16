@@ -43,8 +43,8 @@ export class CrudService {
   }
 
   getPartyForUser(userEmail): Party[] {
-    let parties: Party[] = [];
-    this.firestore.collection('events', ref => ref.where('invitees', '==', userEmail)).ref.get()
+    const parties: Party[] = [];
+    this.firestore.collection('events').ref.get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');
@@ -52,15 +52,17 @@ export class CrudService {
       let counter = 0;
       snapshot.forEach(doc => {
         counter++;
-        let invite: Party = {
-          address: doc.get('Address'),
-          description: doc.get('Description'),
-          startTime: doc.get('startTime'),
-          endTime: doc.get('endTime'),
-          startDate: doc.get('startDate'),
-          invitees: []
-        };
-        parties.push(invite);
+        if (doc.get('invitees') === userEmail) {
+          const invite: Party = {
+            address: doc.get('address'),
+            description: doc.get('description'),
+            startTime: doc.get('startTime'),
+            endTime: doc.get('endTime'),
+            startDate: doc.get('startDate'),
+            invitees: []
+          };
+          parties.push(invite);
+        }
       });
     })
     .catch(err => {
@@ -68,12 +70,4 @@ export class CrudService {
     });
     return parties;
   }
-
-  /*
-  formatDate(date: Date): string {
-    const day = date.getDate;
-    const month = date.getMonth;
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  }*/
 }

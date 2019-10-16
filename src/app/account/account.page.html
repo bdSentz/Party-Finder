@@ -9,7 +9,7 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content *ngIf="afAuth.auth.currentUser != null">
+  <ion-content *ngIf="account.email != null">
     <ion-item-divider>
         <ion-label>
           {{account.name}}

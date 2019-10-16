@@ -9,17 +9,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content *ngIf="afAuth.auth.currentUser != null" fullscreen>
+  <ion-content *ngIf="account.email != null" fullscreen>
     <ion-list>
       <ion-item>
         <ion-input disabled="true" placeholder="Location" [(ngModel)]="party.address"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Location" [(ngModel)]="party.address"></ion-input>
-      </ion-item>
-      <ion-item>
           <ion-label>Start</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="party.startTime" [min]="minDate"></ion-datetime>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="party.startTime"></ion-datetime>
         </ion-item>
       <ion-item><ion-label>End</ion-label>
         <ion-datetime value="2019-02-19" placeholder="select Date" [(ngModel)]="party.endTime"></ion-datetime>
