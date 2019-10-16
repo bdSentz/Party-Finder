@@ -35,7 +35,7 @@
     "firebase": "^6.6.2",
     "firebaseui": "^4.2.0",
     "firebaseui-angular": "^4.0.0",
-    "ionic2-calendar": "^0.5.5",
+    "ionic2-calendar": "^0.5.6",
     "rxjs": "^6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
