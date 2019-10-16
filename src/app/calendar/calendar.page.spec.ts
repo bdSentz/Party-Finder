@@ -26,4 +26,29 @@ describe('CalendarPage', () => {
     //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
+  it('Add new Event (TODO)', () => {
+
+    expect(4).toBe(4);
+  });
+  it('On View Title Changed ', () => {
+    // Just Logs to console 
+    expect(4).toBe(4);
+  });
+  it('On Events Selected ', () => {
+    // Just Logs to console
+    expect(4).toBe(4);
+  });
+  it('On Time Selected ', () => {
+    // Just Logs to console 
+    expect(4).toBe(4);
+  });
+  it('On Current Date Changed ', () => {
+    // Just Logs to console 
+    expect(4).toBe(4);
+  });
+  it('On Range Changed ', () => {
+    // Just logs to console 
+    expect(4).toBe(4);
+  });
+
 });

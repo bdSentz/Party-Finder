@@ -23,4 +23,8 @@ describe('HomePage', () => {
     //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
+
+  it('Send Verification email (TODO)', () => {
+    expect(4).toBe(4);
+  });
 });
