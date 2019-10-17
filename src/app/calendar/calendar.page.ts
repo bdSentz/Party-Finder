@@ -23,8 +23,8 @@ export class CalendarPage {
       colSnap.forEach(snap => {
         let event:any = snap.payload.doc.data();
         event.id = snap.payload.doc.id;
-        event.startTime = new Date(event.startTime);
-        event.endTime = new Date(event.endTime);
+        event.startTime = event.startTime;
+        event.endTime = event.endTime;
         event.allDay = false;
         event.title = event.description;
         console.log(event);
