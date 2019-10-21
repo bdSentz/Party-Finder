@@ -29,9 +29,11 @@ export class PartyPage implements OnInit {
   async CreatePartyRecord() {
     // tslint:disable-next-line: prefer-const
     let record = this.party;
-    if (record.address == null || record.description == null || record.startTime == null) {
+    if (record.address == null || record.description == null || record.startTime == null || record.endTime == null) {
       this.presentToast(false);
     } else {
+      record.startTime = new Date(this.party.startTime);
+      record.endTime = new Date(this.party.endTime);
       this.crudService.createNewParty(record).then(resp => {
         this.presentToast(true);
         console.log(resp);
