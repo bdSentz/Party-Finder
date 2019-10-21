@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MonthViewComponent } from 'ionic2-calendar/monthview';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CrudService } from '../service/crud.service';
+import { DataService } from '../service/data.service';
+import { Account } from '../account.model';
+import { Party } from '../party.model';
+
 
 @Component({
   templateUrl: 'calendar.page.html',
@@ -10,7 +15,23 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class CalendarPage {
 
   eventSource = [];
-
+  accEmail = '';
+  account: Account = 
+  {
+    uid: '',
+    email: '',
+    name: '',
+    houseOwner: false,
+    address: ''
+  }
+  party: Party = 
+  {
+    address: '',
+    invitees: [],
+    description: '',
+    startTime: new Date,
+    endTime: new Date,
+  }
   calendar = {
     mode: 'month',
     currentDate: new Date(),
@@ -18,20 +39,11 @@ export class CalendarPage {
 
   selectedDate = new Date();
   viewTitle;
-  constructor(private db: AngularFirestore) {
-    this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
-      this.eventSource = [];
-      colSnap.forEach(snap => {
-        let event:any = snap.payload.doc.data();
-        event.id = snap.payload.doc.id;
-        event.startTime = event.startTime;
-        event.endTime = event.endTime;
-        event.allDay = false;
-        event.title = event.description;
-        console.log(event);
-        this.eventSource.push(event);
-      });
-    });
+  constructor(private cS: CrudService, public afAuth: AngularFireAuth, private dataservice: DataService) {
+    this.accEmail = this.afAuth.auth.currentUser.email;
+    this.account = dataservice.getAccountData();
+    this.eventSource = this.cS.getPartyForUser(this.account.email);
+    
   }
 
   onViewTitleChanged(title) {
