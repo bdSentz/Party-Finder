@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Party } from '../party.model';
-import { PartyPageModule } from '../party/party.module';
 
 @Injectable({
   providedIn: 'root'
