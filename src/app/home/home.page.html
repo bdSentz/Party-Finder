@@ -36,7 +36,7 @@
     <ion-list *ngFor="let party of parties">
         <ion-card>
             <ion-card-header>
-                <ion-card-subtitle>{{getStringDate(this.party.startTime)}} to {{getStringDate(this.party.endTime)}}</ion-card-subtitle>
+                <ion-card-subtitle>{{helper.getStringDate(this.party.startTime)}} to {{helper.getStringDate(this.party.endTime)}}</ion-card-subtitle>
                 <ion-card-title>Party at {{party.address}} </ion-card-title>
             </ion-card-header>
             <ion-card-content>

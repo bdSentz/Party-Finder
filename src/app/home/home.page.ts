@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import { CrudService } from './../service/crud.service';
 import { DataService } from './../service/data.service';
+import { HelperService } from './../service/helper.service';
 import { Party } from '../party.model';
 
 @Component({
@@ -27,7 +28,7 @@ export class HomePage {
   parties: Party[];
 
   // tslint:disable-next-line: max-line-length
-  constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService) {
+  constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService, public helper: HelperService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.account.email = this.afAuth.auth.currentUser.email;
@@ -62,24 +63,6 @@ export class HomePage {
     .catch(err => {
       console.log('Error getting document', err);
     });
-  }
-
-  // Formats the Date for invites
-  getStringDate(date: Date): string {
-    // tslint:disable-next-line: max-line-length
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    let timeString: string;
-    if (date.getHours() > 12) {
-      timeString = (date.getHours() - 12) + ':' + this.pad(date.getMinutes()) + ' PM';
-    } else {
-      timeString = date.getHours() + ':' + this.pad(date.getMinutes()) + ' AM';
-    }
-    return monthNames[date.getMonth()] + ' ' + date.getDate() + ' ' + timeString;
-  }
-
-  // Used to add leading 0 to time if date.getMinutes() is less than 10
-  pad(n): string {
-    return (n < 10) ? ('0' + n) : n;
   }
 
   async presentToast() {
