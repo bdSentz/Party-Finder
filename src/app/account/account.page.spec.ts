@@ -8,9 +8,16 @@ describe('AccountPage', () => {
     it('Sign Out ', () => {
         //expect(component).toBeTruthy();
         //expect(4).toBe(4);
+      
+
+
         var works;
         try {
             //AccountPage.signOut();
+            /*
+            this.afAuth.auth.signOut().then(() => {
+              location.reload();
+            });*/
             works = 1;
         }
         catch(e) {
