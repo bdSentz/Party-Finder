@@ -56,8 +56,8 @@ export class CrudService {
           const invite: Party = {
             address: doc.get('address'),
             description: doc.get('description'),
-            startTime: doc.get('startTime'),
-            endTime: doc.get('endTime'),
+            startTime: doc.get('startTime').toDate(),
+            endTime: doc.get('endTime').toDate(),
             invitees: []
           };
           parties.push(invite);
