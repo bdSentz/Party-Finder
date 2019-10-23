@@ -28,7 +28,7 @@ export class ListPage {
     
     constructor(public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService) {
     this.account.email = this.afAuth.auth.currentUser.email;
-    this.parties = this.crudService.getPartyForUser(this.account.email);
+    this.parties = this.crudService.getParties();
   }
  
   
