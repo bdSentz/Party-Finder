@@ -4,19 +4,19 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>
-        Add A Party
+        Find A Party
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
   
  <ion-content *ngIf="account.email != null">
-        <ion-list>
+        <ion-list *ngFor="let party of parties">
           <ion-list-header>
-            Find a Party
+            Open Parties
           </ion-list-header>
           <ion-item>
-            <ion-label>party.description    <ion-button (click)="presentToast()">RSVP</ion-button></ion-label>
+            <ion-label>{{party.description}} <br> {{helper.getStringDate(this.party.startTime)}} <br> {{party.address}} <br><ion-button (click)="presentToast()">RSVP</ion-button></ion-label>
           </ion-item>
       </ion-list>
 

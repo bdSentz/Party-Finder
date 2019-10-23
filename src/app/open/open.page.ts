@@ -11,10 +11,10 @@ import { Account } from '../account.model';
 
 
 @Component({
-  templateUrl: 'list.page.html',
-  styleUrls: ['list.page.scss'],
+  templateUrl: 'open.page.html',
+  styleUrls: ['open.page.scss'],
 })
-export class ListPage {
+export class OpenPage {
 
     account: Account = 
     {
@@ -26,9 +26,10 @@ export class ListPage {
       };
       parties: Party[];
     
-    constructor(public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService) {
+    constructor(public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService, private helper: HelperService) {
     this.account.email = this.afAuth.auth.currentUser.email;
-    this.parties = this.crudService.getParties();
+    this.parties = this.crudService.getOpenParties();
+    console.log(this.parties);
   }
  
   

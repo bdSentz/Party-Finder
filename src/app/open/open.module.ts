@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { ListPage } from './list.page';
+import { OpenPage } from './open.page';
 
 @NgModule({
   imports: [
@@ -13,11 +13,11 @@ import { ListPage } from './list.page';
     RouterModule.forChild([
       {
         path: '',
-        component: ListPage
+        component: OpenPage
       }
     ]),
   ],
-  declarations: [ListPage]
+  declarations: [OpenPage]
 })
 
-export class ListPageModule{}
+export class OpenPageModule{}

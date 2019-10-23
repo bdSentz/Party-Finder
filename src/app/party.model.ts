@@ -4,4 +4,5 @@ export interface Party {
     description: string;
     startTime: Date;
     endTime: Date;
+    partyType: boolean;
 }

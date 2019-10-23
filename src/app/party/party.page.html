@@ -24,9 +24,14 @@
         <ion-item>
         <ion-input placeholder="Party Description" [(ngModel)]="party.description"></ion-input>
       </ion-item>
+      <ion-item>    
+          <ion-label>Open Party</ion-label>
+          <ion-toggle [(ngModel)]="party.partyType"></ion-toggle>
+        </ion-item>
       <ion-item>
         <ion-input inputmode="email" multiple=true placeholder="Invitees" [(ngModel)]="party.invitees"></ion-input>
       </ion-item>
+      
     </ion-list>
     <ion-row center>
       <ion-col text-center>  
