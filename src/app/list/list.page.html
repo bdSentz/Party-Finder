@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Add A Party
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  
+ <ion-content *ngIf="account.email != null">
+        <ion-list>
+          <ion-list-header>
+            Find a Party
+          </ion-list-header>
+          <ion-item>
+            <ion-label>party.description    <ion-button (click)="presentToast()">RSVP</ion-button></ion-label>
+          </ion-item>
+      </ion-list>
+
+  </ion-content>

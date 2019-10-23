@@ -68,4 +68,11 @@ export class CrudService {
     });
     return parties;
   }
+
+  getParties(): Party[] {
+    const parties: Party[] = [];
+
+
+    return parties;
+  }
 }

@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MonthViewComponent } from 'ionic2-calendar/monthview';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { CrudService } from '../service/crud.service';
-import { DataService } from '../service/data.service';
 import { Account } from '../account.model';
 import { Party } from '../party.model';
-
+import { CrudService } from '../service/crud.service';
+import { HelperService } from '../service/helper.service';
 
 @Component({
   templateUrl: 'calendar.page.html',
@@ -15,23 +14,16 @@ import { Party } from '../party.model';
 export class CalendarPage {
 
   eventSource = [];
-  accEmail = '';
-  account: Account = 
+
+  parties: Party[];
+  account: Account =
   {
     uid: '',
     email: '',
     name: '',
     houseOwner: false,
     address: ''
-  }
-  party: Party = 
-  {
-    address: '',
-    invitees: [],
-    description: '',
-    startTime: new Date,
-    endTime: new Date,
-  }
+  };
   calendar = {
     mode: 'month',
     currentDate: new Date(),
@@ -39,11 +31,30 @@ export class CalendarPage {
 
   selectedDate = new Date();
   viewTitle;
-  constructor(private cS: CrudService, public afAuth: AngularFireAuth, private dataservice: DataService) {
-    this.accEmail = this.afAuth.auth.currentUser.email;
-    this.account = dataservice.getAccountData();
-    this.eventSource = this.cS.getPartyForUser(this.account.email);
-    
+  constructor(private db: AngularFirestore, private HelperService: HelperService, private afAuth: AngularFireAuth, private CrudService: CrudService) {
+    this.account.email = this.afAuth.auth.currentUser.email;
+    this.parties = CrudService.getPartyForUser(this.account.email);
+    this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
+      this.eventSource = [];
+      colSnap.forEach(snap => {
+        let event:any = snap.payload.doc.data();
+        event.id = snap.payload.doc.id;
+        event.startTime = new Date(event.startTime.toDate()).toISOString();
+        event.startTime = new Date(event.startTime);
+        event.endTime = new Date(event.endTime.toDate()).toISOString();
+        event.endTime = new Date(event.endTime);
+        event.allDay = false;
+        event.title = event.description;
+        console.log(event);
+        console.log(this.parties);
+        for(let parties of this.parties){
+          if (event.description == parties.description) {
+            this.eventSource.push(event);
+          }
+        }
+      });
+      console.log(this.eventSource);
+    });
   }
 
   onViewTitleChanged(title) {
@@ -52,6 +63,7 @@ export class CalendarPage {
   }
 
   onEventSelected(event) {
+    
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 
