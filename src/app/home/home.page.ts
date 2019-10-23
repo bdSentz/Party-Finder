@@ -49,6 +49,7 @@ export class HomePage {
       // If no document exists in database for the current user, create one
       if (!doc.exists) {
         this.crudService.createNewUser(this.account.uid, this.account).then(resp => {
+          this.afAuth.auth.currentUser.sendEmailVerification();
           this.account.address = '';
           console.log(resp);
         })
