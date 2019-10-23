@@ -63,6 +63,7 @@ export class CalendarPage {
   }
 
   onEventSelected(event) {
+    
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 
