@@ -40,7 +40,9 @@ export class CalendarPage {
         let event:any = snap.payload.doc.data();
         event.id = snap.payload.doc.id;
         event.startTime = new Date(event.startTime.toDate()).toISOString();
+        event.startTime = new Date(event.startTime);
         event.endTime = new Date(event.endTime.toDate()).toISOString();
+        event.endTime = new Date(event.endTime);
         event.allDay = false;
         event.title = event.description;
         console.log(event);
