@@ -10,6 +10,11 @@ import { ToastController } from '@ionic/angular';
   templateUrl: 'party.page.html'
 })
 export class PartyPage implements OnInit {
+
+  public anArray: any = [];
+
+  data: any;
+
   account: Account;
 
   party: Party =
@@ -61,5 +66,9 @@ export class PartyPage implements OnInit {
       });
       toast.present();
     }
+  }
+
+  Add() {
+    this.anArray.push({'value': ''});
   }
 }
