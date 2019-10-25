@@ -43,15 +43,15 @@ export class CrudService {
 
   getPartyForUser(userEmail): Party[] {
     const parties: Party[] = [];
-    this.firestore.collection('events').ref.get()
+    this.firestore.collection('events').ref.where('invitees', 'array-contains', userEmail).get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');
       }
-      let counter = 0;
+      // let counter = 0;
       snapshot.forEach(doc => {
-        counter++;
-        if (doc.get('invitees') === userEmail) {
+        // counter++;
+        // if (doc.get('invitees') === userEmail) {
           const invite: Party = {
             address: doc.get('address'),
             description: doc.get('description'),
@@ -60,7 +60,7 @@ export class CrudService {
             invitees: []
           };
           parties.push(invite);
-        }
+        // }
       });
     })
     .catch(err => {

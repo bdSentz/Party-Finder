@@ -11,8 +11,6 @@ import { ToastController } from '@ionic/angular';
 })
 export class PartyPage implements OnInit {
 
-  public anArray: any = [];
-
   data: any;
 
   account: Account;
@@ -20,7 +18,7 @@ export class PartyPage implements OnInit {
   party: Party =
   {
     address: null,
-    invitees: [''],
+    invitees: [],
     description: null,
     startTime: null,
     endTime: null,
@@ -69,6 +67,7 @@ export class PartyPage implements OnInit {
   }
 
   Add() {
-    this.anArray.push({'value': ''});
+    console.log(this.party.invitees);
+    this.party.invitees.push({'value': ''});
   }
 }

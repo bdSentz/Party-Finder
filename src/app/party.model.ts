@@ -1,6 +1,6 @@
 export interface Party {
     address: string;
-    invitees: string[];
+    invitees: any[];
     description: string;
     startTime: Date;
     endTime: Date;

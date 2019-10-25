@@ -25,9 +25,9 @@
         <ion-input placeholder="Party Description" [(ngModel)]="party.description"></ion-input>
       </ion-item>
 
-      <ion-item *ngFor="let att of anArray; let idx = index">
-        <ion-label color="primary">{{att.label}}{{idx+1}}</ion-label>
-        <ion-input type="text"  text-right  [(ngModel)]="anArray[idx].value"></ion-input>
+      <ion-item *ngFor="let att of party.invitees; let idx = index">
+        <ion-label color="primary">{{idx+1}}</ion-label>
+        <ion-input type="text"  text-right  [(ngModel)]="party.invitees[idx].value"></ion-input>
       </ion-item>
       <ion-button (click)="Add()">
         <ion-icon size="small" slot="icon-only" name="person-add"></ion-icon>
