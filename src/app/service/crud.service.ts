@@ -70,7 +70,7 @@ export class CrudService {
     return parties;
   }
 
-  getOpenParties(): Party[] {
+  getOpenParties(userEmail): Party[] {
     const parties: Party[] = [];
     this.firestore.collection('events').ref.get()
     .then(snapshot => {
@@ -80,7 +80,7 @@ export class CrudService {
       let counter = 0;
       snapshot.forEach(doc => {
         counter++;
-        if (doc.get('partyType') === true) {
+        if (doc.get('partyType') === true && doc.get('invitees') != userEmail) {
           const invite: Party = {
             address: doc.get('address'),
             description: doc.get('description'),
