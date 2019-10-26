@@ -22,7 +22,7 @@ export class PartyPage implements OnInit {
     description: null,
     startTime: null,
     endTime: null,
-    partyType: null
+    openParty: false
   };
 
   constructor(private dataService: DataService, private crudService: CrudService, public toastController: ToastController) {
@@ -68,7 +68,6 @@ export class PartyPage implements OnInit {
   }
 
   Add() {
-    console.log(this.party.invitees);
-    this.party.invitees.push({'value': ''});
+    this.party.invitees.push({value: ''});
   }
 }

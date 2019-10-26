@@ -41,27 +41,25 @@ export class CrudService {
     this.firestore.doc('events/' + recordID).delete();
   }
 
-  getPartyForUser(userEmail): Party[] {
+  getPartyForUser(userEmail: string): Party[] {
     const parties: Party[] = [];
-    this.firestore.collection('events').ref.where('invitees', 'array-contains', userEmail).get()
+    const col = this.firestore.collection('events');
+    const query = col.ref.where('invitees', 'array-contains', {value: userEmail});
+    query.get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');
       }
-      // let counter = 0;
       snapshot.forEach(doc => {
-        // counter++;
-        // if (doc.get('invitees') === userEmail) {
           const invite: Party = {
             address: doc.get('address'),
             description: doc.get('description'),
             startTime: doc.get('startTime').toDate(),
             endTime: doc.get('endTime').toDate(),
             invitees: [],
-            partyType: doc.get('partyType')
+            openParty: doc.get('openParty')
           };
           parties.push(invite);
-        }
       });
     })
     .catch(err => {
@@ -80,17 +78,17 @@ export class CrudService {
       let counter = 0;
       snapshot.forEach(doc => {
         counter++;
-        if (doc.get('partyType') === true) {
+        if (doc.get('openParty') === true) {
           const invite: Party = {
             address: doc.get('address'),
             description: doc.get('description'),
             startTime: doc.get('startTime').toDate(),
             endTime: doc.get('endTime').toDate(),
             invitees: [],
-            partyType: doc.get('partyType')
+            openParty: doc.get('openParty')
           };
           parties.push(invite);
-        // }
+        }
       });
     })
     .catch(err => {

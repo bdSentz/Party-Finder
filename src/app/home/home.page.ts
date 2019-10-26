@@ -57,8 +57,9 @@ export class HomePage {
           console.log(error);
         });
       } else {
-        this.account.houseOwner = doc.get('HouseOwner');
-        this.account.address = doc.get('Address');
+        this.account.houseOwner = doc.get('houseOwner');
+        this.account.address = doc.get('address');
+        this.account.houseOwner = doc.get('houseOwner');
       }
     })
     .catch(err => {

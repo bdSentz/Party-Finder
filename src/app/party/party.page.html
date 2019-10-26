@@ -25,21 +25,18 @@
         <ion-input placeholder="Party Description" [(ngModel)]="party.description"></ion-input>
       </ion-item>
 
+      <ion-item>    
+        <ion-label>Open Party</ion-label>
+        <ion-toggle [(ngModel)]="party.openParty"></ion-toggle>
+      </ion-item>
       <ion-item *ngFor="let att of party.invitees; let idx = index">
         <ion-label color="primary">{{idx+1}}</ion-label>
         <ion-input type="text"  text-right  [(ngModel)]="party.invitees[idx].value"></ion-input>
       </ion-item>
-      <ion-button (click)="Add()">
+      <ion-button *ngIf="party.openParty == false" (click)="Add()">
         <ion-icon size="small" slot="icon-only" name="person-add"></ion-icon>
         &nbsp;Add Invitee
       </ion-button>
-      <ion-item>    
-          <ion-label>Open Party</ion-label>
-          <ion-toggle [(ngModel)]="party.partyType"></ion-toggle>
-        </ion-item>
-      <ion-item>
-        <ion-input inputmode="email" multiple=true placeholder="Invitees" [(ngModel)]="party.invitees"></ion-input>
-      </ion-item>
       
     </ion-list>
     <ion-row center>
