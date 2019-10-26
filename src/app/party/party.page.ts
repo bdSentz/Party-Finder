@@ -22,6 +22,7 @@ export class PartyPage implements OnInit {
     description: null,
     startTime: null,
     endTime: null,
+    partyType: null
   };
 
   constructor(private dataService: DataService, private crudService: CrudService, public toastController: ToastController) {

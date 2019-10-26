@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MonthViewComponent } from 'ionic2-calendar/monthview';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Account } from '../account.model';
+import { Party } from '../party.model';
+import { CrudService } from '../service/crud.service';
+import { HelperService } from '../service/helper.service';
 
 @Component({
   templateUrl: 'calendar.page.html',
@@ -10,6 +15,15 @@ export class CalendarPage {
 
   eventSource = [];
 
+  parties: Party[];
+  account: Account =
+  {
+    uid: '',
+    email: '',
+    name: '',
+    houseOwner: false,
+    address: ''
+  };
   calendar = {
     mode: 'month',
     currentDate: new Date(),
@@ -17,19 +31,29 @@ export class CalendarPage {
 
   selectedDate = new Date();
   viewTitle;
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private HelperService: HelperService, private afAuth: AngularFireAuth, private CrudService: CrudService) {
+    this.account.email = this.afAuth.auth.currentUser.email;
+    this.parties = CrudService.getPartyForUser(this.account.email);
     this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
       this.eventSource = [];
       colSnap.forEach(snap => {
         let event:any = snap.payload.doc.data();
         event.id = snap.payload.doc.id;
-        event.startTime = event.startTime;
-        event.endTime = event.endTime;
+        event.startTime = new Date(event.startTime.toDate()).toISOString();
+        event.startTime = new Date(event.startTime);
+        event.endTime = new Date(event.endTime.toDate()).toISOString();
+        event.endTime = new Date(event.endTime);
         event.allDay = false;
         event.title = event.description;
         console.log(event);
-        this.eventSource.push(event);
+        console.log(this.parties);
+        for(let parties of this.parties){
+          if (event.description == parties.description) {
+            this.eventSource.push(event);
+          }
+        }
       });
+      console.log(this.eventSource);
     });
   }
 
@@ -39,6 +63,7 @@ export class CalendarPage {
   }
 
   onEventSelected(event) {
+    
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 

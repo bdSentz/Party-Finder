@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
+    path: 'open',
+    loadChildren: () => import('./open/open.module').then(m=> m.OpenPageModule)
+  },
+  {
     path: 'map',
     loadChildren: () => import('./map/map.module').then(m => m.MapPageModule)
   },

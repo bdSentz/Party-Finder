@@ -17,6 +17,11 @@ export class AppComponent {
       icon: 'home'
     },
     {
+      title: 'Open',
+      url: '/open',
+      icon: 'glasses'
+    },
+    {
       title: 'Map',
       url: '/map',
       icon: 'map'
@@ -34,7 +39,7 @@ export class AppComponent {
     {
       title: 'Calendar',
       url: '/calendar',
-      icon: 'clipboard'
+      icon: 'calendar'
     }
   ];
 
