@@ -10,16 +10,19 @@ import { ToastController } from '@ionic/angular';
   templateUrl: 'party.page.html'
 })
 export class PartyPage implements OnInit {
+
+  data: any;
+
   account: Account;
 
   party: Party =
   {
     address: null,
-    invitees: [''],
+    invitees: [],
     description: null,
     startTime: null,
     endTime: null,
-    partyType: null
+    openParty: false
   };
 
   constructor(private dataService: DataService, private crudService: CrudService, public toastController: ToastController) {
@@ -62,5 +65,9 @@ export class PartyPage implements OnInit {
       });
       toast.present();
     }
+  }
+
+  Add() {
+    this.party.invitees.push({value: ''});
   }
 }
