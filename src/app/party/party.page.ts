@@ -5,6 +5,7 @@ import { CrudService } from './../service/crud.service';
 import { Account } from '../account.model';
 import { DataService } from '../service/data.service';
 import { ToastController } from '@ionic/angular';
+import { HelperService } from '../service/helper.service';
 
 @Component({
   templateUrl: 'party.page.html'
@@ -13,7 +14,14 @@ export class PartyPage implements OnInit {
 
   data: any;
 
-  account: Account;
+  account: Account =
+  {
+    uid: '',
+    email: '',
+    name: '',
+    houseOwner: false,
+    address: ''
+  };
 
   party: Party =
   {
@@ -25,9 +33,14 @@ export class PartyPage implements OnInit {
     openParty: false
   };
 
-  constructor(private dataService: DataService, private crudService: CrudService, public toastController: ToastController) {
-    this.account = dataService.getAccountData();
-    this.party.address = this.account.address;
+  // tslint:disable-next-line: max-line-length
+  constructor(public helper: HelperService, private dataService: DataService, public afAuth: AngularFireAuth, private crudService: CrudService, public toastController: ToastController) {
+    afAuth.authState.subscribe(user => {
+      if (user) {
+        this.account = helper.getAccount(afAuth, dataService, crudService);
+        this.party.address = this.account.address;
+      }
+    });
   }
 
   async CreatePartyRecord() {

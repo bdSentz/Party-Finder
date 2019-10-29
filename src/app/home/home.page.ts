@@ -29,13 +29,10 @@ export class HomePage {
 
   // tslint:disable-next-line: max-line-length
   constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService, public helper: HelperService, public navCtrl: NavController, private alertCtrl: AlertController) {
-    this.afAuth.authState.subscribe(user => {
+    afAuth.authState.subscribe(user => {
       if (user) {
-        // Get account data from database for current user if it exists. If not create database document for the user
-        this.account = this.crudService.getUserAccount(afAuth);
-        this.parties = this.crudService.getPartyForUser(this.account.email);
-        // Set singleton account value so other pages can access account data
-        dataService.setAccountData(this.account);
+        this.account = helper.getAccount(afAuth, dataService, crudService);
+        this.parties = helper.getParties(afAuth, dataService, crudService);
       }
     });
   }
