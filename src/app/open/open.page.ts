@@ -9,6 +9,8 @@ import { DataService } from '../service/data.service';
 import { ToastController } from '@ionic/angular';
 import { Account } from '../account.model';
 import { PartyPage } from '../party/party.page';
+import { firestore } from 'firebase';
+
 
 
 @Component({
@@ -36,20 +38,34 @@ export class OpenPage {
       };
       parties: Party[];
     
-    constructor(public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService, private helper: HelperService) {
+    constructor(private db: AngularFirestore,public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService, private helper: HelperService) {
     this.account.email = this.afAuth.auth.currentUser.email;
     this.parties = this.crudService.getOpenParties(this.account.email);
     console.log(this.parties);
   }
  
-  joinParty() {
+  joinParty(description) {
     this.presentToast();
-    let record = {};
-  //find which party was selected
-    // tslint:disable-next-line: no-string-literal
-    record['invitees'] = this.account.email;
-    this.selectedParty;
-    this.crudService.updateParty(this.account.uid, record);
+    this.selectedParty.description = description;
+    this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
+      colSnap.forEach(snap => {
+        let event:any = snap.payload.doc.data();
+        event.id = snap.payload.doc.id;
+        event.description = event.description;
+        for(let parties of this.parties){
+          if (event.description == parties.description) {
+            if(event.openParty == true){
+              event.invitees = event.invitees.concat(this.account.email);
+              this.selectedParty = event;
+              
+              console.log(this.selectedParty);
+              console.log(event);
+
+            }
+          }
+        }
+      });
+    });
   }
 
   async presentToast() {

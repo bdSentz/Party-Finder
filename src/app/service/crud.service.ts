@@ -84,13 +84,20 @@ export class CrudService {
             description: doc.get('description'),
             startTime: doc.get('startTime').toDate(),
             endTime: doc.get('endTime').toDate(),
-            invitees: [],
+            invitees: doc.get('invitees'),
             openParty: doc.get('openParty')
           };
-          parties.push(invite);
+          if(invite.invitees.includes(userEmail)){
+            console.log('already invited');
+          }
+          else{
+            parties.push(invite);
+          }
+          
         }
       });
     })
+    
     .catch(err => {
       console.log('Error getting documents', err);
     });

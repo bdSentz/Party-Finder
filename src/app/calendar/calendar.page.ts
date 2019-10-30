@@ -14,7 +14,7 @@ import { HelperService } from '../service/helper.service';
 export class CalendarPage {
 
   eventSource = [];
-
+  invite: '';
   parties: Party[];
   account: Account =
   {
@@ -49,7 +49,13 @@ export class CalendarPage {
         console.log(this.parties);
         for(let parties of this.parties){
           if (event.description == parties.description) {
-            this.eventSource.push(event);
+            for(let invite of event.invitees)
+            {
+              if(invite.value == this.account.email)
+              {
+                this.eventSource.push(event);
+              }
+            }
           }
         }
       });
