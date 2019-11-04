@@ -22,7 +22,11 @@
 </ion-content>
 
 <ion-content *ngIf="afAuth.auth.currentUser != null">
-    <ion-card class="welcome-card">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>  
+  
+  <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>
         <ion-card-subtitle>View Your Invites</ion-card-subtitle>

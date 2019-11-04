@@ -37,6 +37,16 @@ export class HomePage {
     });
   }
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+    // refresh
+    this.parties = this.crudService.getPartyForUser(this.afAuth.auth.currentUser.email);
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
   async presentToast(bool: boolean, party: Party) {
     if (bool) {
       const toast = await this.toastController.create({
