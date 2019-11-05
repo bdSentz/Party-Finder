@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Account } from '../account.model';
 import { Party } from '../party.model';
@@ -10,7 +10,7 @@ import { DataService } from '../service/data.service';
   templateUrl: 'calendar.page.html',
   styleUrls: ['calendar.page.scss'],
 })
-export class CalendarPage{
+export class CalendarPage implements OnInit {
   eventSource = [];
   parties: Party[];
   account: Account;
@@ -23,10 +23,13 @@ export class CalendarPage{
 
   // tslint:disable-next-line: max-line-length
   constructor(private dataService: DataService, public helper: HelperService, public afAuth: AngularFireAuth, private crudService: CrudService) {
-    afAuth.authState.subscribe(async user => {
+  }
+
+  ngOnInit(): void {
+    this.afAuth.authState.subscribe(async user => {
       if (user) {
-        this.account = helper.getAccount(afAuth, dataService, crudService);
-        this.parties = await this.helper.getParties(afAuth, dataService, crudService);
+        this.account = this.helper.getAccount(this.afAuth, this.dataService, this.crudService);
+        this.parties = await this.helper.getParties(this.afAuth, this.dataService, this.crudService);
         this.parties.forEach(party => {
           let event = {
             startTime: new Date(party.startTime.toISOString()),
