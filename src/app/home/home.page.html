@@ -22,7 +22,11 @@
 </ion-content>
 
 <ion-content *ngIf="afAuth.auth.currentUser != null">
-    <ion-card class="welcome-card">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>  
+  
+  <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>
         <ion-card-subtitle>View Your Invites</ion-card-subtitle>
@@ -41,8 +45,8 @@
             </ion-card-header>
             <ion-card-content>
                 <p>{{party.description}}</p>
-                <ion-button (click)="presentToast()">Accept</ion-button>
-                <ion-button>Decline</ion-button>
+                <ion-button (click)="presentToast(true, party)">Accept</ion-button>
+                <ion-button (click)="presentToast(false, party)">Decline</ion-button>
             </ion-card-content>
         </ion-card>
     </ion-list>

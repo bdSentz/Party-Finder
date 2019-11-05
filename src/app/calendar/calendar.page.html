@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="parties">
   <div class="ion-padding">
 
     <calendar [eventSource]="eventSource"

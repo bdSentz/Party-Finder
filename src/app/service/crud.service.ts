@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Party } from '../party.model';
+import { Account } from '../account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,47 @@ export class CrudService {
     private firestore: AngularFirestore
   ) { }
 
-  createNewUser(uid, record) {
+  /**
+   * Creates a new user document in the database. Document ID is uid assigned by firebase authentication
+   */
+  createNewUser(uid, record, afAuth: AngularFireAuth) {
+    afAuth.auth.currentUser.sendEmailVerification();
     return this.firestore.collection('users').doc(uid).set(record);
   }
 
-  getUserDocument(uid) {
-    return this.firestore.collection('users').doc(uid).ref;
+  /**
+   * Returns the account information for the user with the given uid. Creates new user doc if one doesn't exist yet
+   */
+  getUserAccount(afAuth: AngularFireAuth): Account {
+    const uid = afAuth.auth.currentUser.uid;
+    const account: Account = {
+      uid,
+      email: afAuth.auth.currentUser.email,
+      name: afAuth.auth.currentUser.displayName,
+      houseOwner: false,
+      address: ''
+    };
+    this.firestore.collection('users').doc(uid).ref.get().then(doc => {
+      // If no document exists in database for the current user, create one
+      if (!doc.exists) {
+        this.createNewUser(uid, account, afAuth).then(resp => {
+          console.log(resp);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      } else {
+        account.email = doc.get('email');
+        account.name = doc.get('name');
+        account.houseOwner = doc.get('houseOwner');
+        account.address = doc.get('address');
+        return account;
+      }
+    })
+    .catch(err => {
+      console.log('Error getting document', err);
+    });
+    return account;
   }
 
   updateUser(recordID, record) {
@@ -41,6 +77,9 @@ export class CrudService {
     this.firestore.doc('events/' + recordID).delete();
   }
 
+  /**
+   * Returns an array of parties that the user with the given email address is invited to
+   */
   getPartyForUser(userEmail: string): Party[] {
     const parties: Party[] = [];
     const col = this.firestore.collection('events');
@@ -68,30 +107,32 @@ export class CrudService {
     return parties;
   }
 
-  getOpenParties(userEmail): Party[] {
+  /**
+   * Returns an array of all open parties
+   */
+  getOpenParties(): Party[] {
     const parties: Party[] = [];
-    this.firestore.collection('events').ref.get()
+    const col = this.firestore.collection('events');
+    const query = col.ref.where('openParty', '==', true);
+    query.get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');
       }
-      let counter = 0;
       snapshot.forEach(doc => {
-        counter++;
-        if (doc.get('openParty') === true) {
-          const invite: Party = {
+        const invite: Party = {
             address: doc.get('address'),
             description: doc.get('description'),
             startTime: doc.get('startTime').toDate(),
             endTime: doc.get('endTime').toDate(),
-            invitees: doc.get('invitees'),
+            invitees: [],
             openParty: doc.get('openParty')
           };
           parties.push(invite);
         }
+
       });
     })
-    
     .catch(err => {
       console.log('Error getting documents', err);
     });

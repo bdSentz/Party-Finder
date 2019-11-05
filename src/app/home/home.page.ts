@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, AlertController } from '@ionic/angular';
 
 import { Account } from '../account.model';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -28,50 +28,55 @@ export class HomePage {
   parties: Party[];
 
   // tslint:disable-next-line: max-line-length
-  constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService, public helper: HelperService, public navCtrl: NavController) {
-    this.afAuth.authState.subscribe(user => {
+  constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService, public helper: HelperService, public navCtrl: NavController, private alertCtrl: AlertController) {
+    afAuth.authState.subscribe(user => {
       if (user) {
-        this.account.email = this.afAuth.auth.currentUser.email;
-        this.account.name = this.afAuth.auth.currentUser.displayName;
-        this.account.uid = this.afAuth.auth.currentUser.uid;
-        this.parties = this.crudService.getPartyForUser(this.account.email);
+        this.account = helper.getAccount(afAuth, dataService, crudService);
+        this.parties = helper.getParties(afAuth, dataService, crudService);
       }
-      // Get account data from database for current user if it exists. If not create database document for the user
-      this.getUserInfo();
-    });
-    // Set singleton account value so other pages can access account data
-    dataService.setAccountData(this.account);
-  }
-
-  getUserInfo() {
-    const userDocumentRef = this.crudService.getUserDocument(this.account.uid);
-    const getDoc = userDocumentRef.get().then(doc => {
-      // If no document exists in database for the current user, create one
-      if (!doc.exists) {
-        this.crudService.createNewUser(this.account.uid, this.account).then(resp => {
-          this.afAuth.auth.currentUser.sendEmailVerification();
-          this.account.address = '';
-          console.log(resp);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      } else {
-        this.account.houseOwner = doc.get('houseOwner');
-        this.account.address = doc.get('address');
-        this.account.houseOwner = doc.get('houseOwner');
-      }
-    })
-    .catch(err => {
-      console.log('Error getting document', err);
     });
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'You have accepted the invite!',
-      duration: 2000
-    });
-    toast.present();
+  /**
+   * Refreshes parties that user has been invited to by pulling down on home screen
+   */
+  doRefresh(event) {
+    this.parties = this.crudService.getPartyForUser(this.afAuth.auth.currentUser.email);
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
+  async presentToast(bool: boolean, party: Party) {
+    if (bool) {
+      const toast = await this.toastController.create({
+        message: 'You have accepted the invite!',
+        duration: 2000
+      });
+      toast.present();
+    } else {
+      const alert = this.alertCtrl.create({
+        message: 'Are you sure you would like to decline this invite?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Remove Invite',
+            handler: async () => {
+              const toast = await this.toastController.create({
+                message: 'You have declined the invite.',
+                duration: 2000
+              });
+              toast.present();
+            }
+          }
+        ]
+      });
+      (await alert).present();
+    }
   }
 }
