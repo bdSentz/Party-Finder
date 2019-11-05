@@ -37,12 +37,12 @@ export class HomePage {
     });
   }
 
+  /**
+   * Refreshes parties that user has been invited to by pulling down on home screen
+   */
   doRefresh(event) {
-    console.log('Begin async operation');
-    // refresh
     this.parties = this.crudService.getPartyForUser(this.afAuth.auth.currentUser.email);
     setTimeout(() => {
-      console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
@@ -56,7 +56,6 @@ export class HomePage {
       toast.present();
     } else {
       const alert = this.alertCtrl.create({
-        // title: 'Decline Invite',
         message: 'Are you sure you would like to decline this invite?',
         buttons: [
           {
