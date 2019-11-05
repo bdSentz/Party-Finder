@@ -11,10 +11,12 @@
 
 
    <ion-content *ngIf="account.email != null">
-        <ion-list *ngFor="let party of parties">
+     <h1>Opens</h1>
+        <ion-list *ngFor="let party of joinableParties">
           <ion-item>
-              <ion-label>{{party.description}} <br> {{helper.getStringDate(this.party.startTime)}} <br> {{party.address}} <br><option (click)="joinParty(party.description)">RSVP</option></ion-label>
+              <ion-label>{{party.description}} <br> {{helper.getStringDate(party.startTime)}} <br> {{party.address}} <br><option (click)="joinParty(party.description)">RSVP</option></ion-label>
           </ion-item>
       </ion-list>
+    
 
   </ion-content>

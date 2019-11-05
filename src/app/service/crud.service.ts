@@ -87,13 +87,7 @@ export class CrudService {
             invitees: doc.get('invitees'),
             openParty: doc.get('openParty')
           };
-          if(invite.invitees.includes(userEmail)){
-            console.log('already invited');
-          }
-          else{
-            parties.push(invite);
-          }
-          
+          parties.push(invite);
         }
       });
     })
