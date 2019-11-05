@@ -9,15 +9,15 @@
     </ion-toolbar>
   </ion-header>
 
-  
- <ion-content *ngIf="account.email != null">
-        <ion-list *ngFor="let party of parties">
-          <ion-list-header>
-            Open Parties
-          </ion-list-header>
+
+   <ion-content *ngIf="account.email != null">
+     <h1>Open Parties</h1>
+        <ion-list *ngFor="let party of joinableParties">
           <ion-item>
-            <ion-label>{{party.description}} <br> {{helper.getStringDate(this.party.startTime)}} <br> {{party.address}} <br><ion-button (click)="presentToast()">RSVP</ion-button></ion-label>
+              <ion-label>{{party.description}} <br> {{helper.getStringDate(party.startTime)}} <br> {{party.address}} <br><option (click)="joinParty(party.description)">RSVP</option></ion-label>
+
           </ion-item>
       </ion-list>
+    
 
   </ion-content>

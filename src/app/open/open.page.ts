@@ -15,22 +15,56 @@ import { Account } from '../account.model';
 
 export class OpenPage {
 
-  account: Account =
+ selectedParty: Party = 
   {
-    uid: '',
-    email: '',
-    name: '',
-    houseOwner: false,
-    address: ''
-  };
+    address: null,
+    invitees: [''],
+    description: null,
+    startTime: null,
+    endTime: null,
+    openParty: null
+  }
+    account: Account = 
+    {
+        uid: '',
+        email: '',
+        name: '',
+        houseOwner: false,
+        address: ''
+      };
+      parties: Party[];
+      joinableParties: Party[];
+      joinedParties: Party[];
 
-  parties: Party[];
-
-  // tslint:disable-next-line: max-line-length
-  constructor(public afAuth: AngularFireAuth, private crudService: CrudService, public toastController: ToastController, private dataService: DataService, private helper: HelperService) {
+    constructor(private db: AngularFirestore,public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService, private helper: HelperService) {
     this.account.email = this.afAuth.auth.currentUser.email;
-    this.parties = this.crudService.getOpenParties();
-    console.log(this.parties);
+    this.joinableParties = this.crudService.getOpenParties(this.account.email);
+    console.log(this.joinableParties);
+  }
+ 
+  joinParty(description) {
+    this.presentToast();
+    this.selectedParty.description = description;
+    this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
+      colSnap.forEach(snap => {
+        let event:any = snap.payload.doc.data();
+        event.id = snap.payload.doc.id;
+        event.description = event.description;
+        for(let parties of this.joinableParties){
+          if (event.description == parties.description) {
+            if((event.openParty == true) && !(event.invitees.includes(this.account.email))){
+              event.invitees = event.invitees.concat(this.account.email);
+              this.selectedParty = event;
+              this.rsvp(event.id);
+              console.log(event.id);
+              console.log(this.selectedParty);
+              console.log(event);
+
+            }
+          }
+        }
+      });
+    });
   }
 
   async presentToast() {
@@ -40,4 +74,12 @@ export class OpenPage {
     });
     toast.present();
   }
+
+  rsvp(id) {
+    let record = {};
+     // tslint:disable-next-line: no-string-literal
+     record['invitees'] = this.selectedParty.invitees;
+     this.crudService.updateParty(id, record);
+  }
 }
+

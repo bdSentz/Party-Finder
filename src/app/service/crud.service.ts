@@ -127,8 +127,10 @@ export class CrudService {
             endTime: doc.get('endTime').toDate(),
             invitees: [],
             openParty: doc.get('openParty')
-        };
-        parties.push(invite);
+          };
+          parties.push(invite);
+        }
+
       });
     })
     .catch(err => {
