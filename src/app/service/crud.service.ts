@@ -136,10 +136,4 @@ export class CrudService {
     });
     return parties;
   }
-
-  /**
-   * TODO: Add documentation for this method
-   */
-  getCalendarParties() {
-  }
 }

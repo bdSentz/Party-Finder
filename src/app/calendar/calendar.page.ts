@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { MonthViewComponent } from 'ionic2-calendar/monthview';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Account } from '../account.model';
 import { Party } from '../party.model';
@@ -12,18 +10,10 @@ import { DataService } from '../service/data.service';
   templateUrl: 'calendar.page.html',
   styleUrls: ['calendar.page.scss'],
 })
-export class CalendarPage {
-
+export class CalendarPage{
   eventSource = [];
   parties: Party[];
-  account: Account =
-  {
-    uid: '',
-    email: '',
-    name: '',
-    houseOwner: false,
-    address: ''
-  };
+  account: Account;
   calendar = {
     mode: 'month',
     currentDate: new Date()
@@ -32,27 +22,21 @@ export class CalendarPage {
   viewTitle;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private db: AngularFirestore, public dataService: DataService, private helperService: HelperService, private afAuth: AngularFireAuth, private crudService: CrudService) {
-    this.account = helperService.getAccount(afAuth, dataService, crudService);
-    this.parties = crudService.getPartyForUser(this.account.email);
-    this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
-      this.eventSource = [];
-      colSnap.forEach(snap => {
-        const event: any = snap.payload.doc.data();
-        event.id = snap.payload.doc.id;
-        event.startTime = new Date(new Date(event.startTime.toDate()).toISOString());
-        event.endTime = new Date(new Date(event.endTime.toDate()).toISOString());
-        event.allDay = false;
-        event.title = event.description;
-        console.log(event);
-        console.log(this.parties);
-        for (const parties of this.parties) {
-          if (event.description === parties.description) {
-            this.eventSource.push(event);
-          }
-        }
-      });
-      console.log(this.eventSource);
+  constructor(private dataService: DataService, public helper: HelperService, public afAuth: AngularFireAuth, private crudService: CrudService) {
+    afAuth.authState.subscribe(async user => {
+      if (user) {
+        this.account = helper.getAccount(afAuth, dataService, crudService);
+        this.parties = await this.helper.getParties(afAuth, dataService, crudService);
+        this.parties.forEach(party => {
+          let event = {
+            startTime: new Date(party.startTime.toISOString()),
+            endTime: new Date(party.endTime.toISOString()),
+            allDay: false,
+            title: party.description
+          };
+          this.eventSource.push(event);
+        });
+      }
     });
   }
 
