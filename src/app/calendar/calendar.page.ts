@@ -31,7 +31,7 @@ export class CalendarPage implements OnInit {
         this.account = this.helper.getAccount(this.afAuth, this.dataService, this.crudService);
         this.parties = await this.helper.getParties(this.afAuth, this.dataService, this.crudService);
         this.parties.forEach(party => {
-          let event = {
+          const event = {
             startTime: new Date(party.startTime.toISOString()),
             endTime: new Date(party.endTime.toISOString()),
             allDay: false,

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Party } from '../party.model';
 import { Account } from '../account.model';
+import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -128,14 +129,38 @@ export class CrudService {
             invitees: [],
             openParty: doc.get('openParty')
           };
-          parties.push(invite);
-        }
-
+        parties.push(invite);
       });
-    })
-    .catch(err => {
-      console.log('Error getting documents', err);
     });
     return parties;
+  }
+
+  /**
+   * Adds user to invitee list for open party
+   */
+  rsvpOpenParty(selectedParty: Party, email: string): boolean {
+    const col = this.firestore.collection('events');
+    const query = col.ref.where('openParty', '==', true);
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+        const event: any = doc.data();
+        const id = doc.id;
+        if (selectedParty.address === event.address && selectedParty.description === event.description) {
+          if (!event.invitees.includes(email)) {
+            event.invitees = event.invitees.concat(email);
+            const record = {};
+            // tslint:disable-next-line: no-string-literal
+            record['invitees'] = event.invitees;
+            this.updateParty(id, record);
+            return true;
+          }
+        }
+      });
+    });
+    return false;
   }
 }
