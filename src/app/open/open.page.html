@@ -13,7 +13,14 @@
   <ion-content *ngIf="account.email != null">
     <h1>Open Parties</h1>
       <ion-list *ngFor="let party of joinableParties">
-        <ion-item>
+        <ion-item *ngIf="!party.invitees.includes(account.email)">
+          <ion-label>{{party.description}} <br> {{helper.getStringDate(party.startTime)}} <br> {{party.address}} <br><option (click)="joinParty(party)">RSVP</option></ion-label>
+        </ion-item>
+      </ion-list>
+
+      <h2>RSVP'D Parties</h2>
+      <ion-list *ngFor="let party of joinableParties">
+        <ion-item *ngIf="party.invitees.includes(account.email)">
           <ion-label>{{party.description}} <br> {{helper.getStringDate(party.startTime)}} <br> {{party.address}} <br><option (click)="joinParty(party)">RSVP</option></ion-label>
         </ion-item>
       </ion-list>

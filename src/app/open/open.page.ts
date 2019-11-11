@@ -43,6 +43,7 @@ export class OpenPage {
   }
 
   joinParty(party: Party) {
+    console.log(party.invitees);
     if (this.crudService.rsvpOpenParty(party, this.account.email)) {
       this.presentToast();
     }

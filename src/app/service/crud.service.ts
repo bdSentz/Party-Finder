@@ -150,8 +150,10 @@ export class CrudService {
         const event: any = doc.data();
         const id = doc.id;
         if (selectedParty.address === event.address && selectedParty.description === event.description) {
-          if (!event.invitees.includes(email)) {
-            event.invitees = event.invitees.concat(email);
+          if (!(email in selectedParty.invitees)) {
+            event.invitees.push({
+              value: email
+            });
             const record = {};
             // tslint:disable-next-line: no-string-literal
             record['invitees'] = event.invitees;
