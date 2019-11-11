@@ -160,6 +160,9 @@ export class CrudService {
             this.updateParty(id, record);
             return true;
           }
+          else{
+            return false;
+          }
         }
       });
     });
