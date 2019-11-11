@@ -38,7 +38,7 @@ export class OpenPage {
 
     constructor(private db: AngularFirestore,public afAuth: AngularFireAuth, private crudService: CrudService,public toastController: ToastController, private dataService: DataService, private helper: HelperService) {
     this.account.email = this.afAuth.auth.currentUser.email;
-    this.joinableParties = this.crudService.getOpenParties(this.account.email);
+    this.joinableParties = this.crudService.getOpenParties();
     console.log(this.joinableParties);
   }
  

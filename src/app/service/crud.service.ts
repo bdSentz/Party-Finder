@@ -129,13 +129,11 @@ export class CrudService {
             openParty: doc.get('openParty')
           };
           parties.push(invite);
-        }
-
-      });
-    })
-    .catch(err => {
+        });
+      })
+            .catch(err => {
       console.log('Error getting documents', err);
-    });
+      });
     return parties;
   }
 }
