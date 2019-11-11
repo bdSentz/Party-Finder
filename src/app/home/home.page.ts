@@ -40,8 +40,9 @@ export class HomePage {
   /**
    * Refreshes parties that user has been invited to by pulling down on home screen
    */
-  doRefresh(event) {
-    this.parties = this.crudService.getPartyForUser(this.afAuth.auth.currentUser.email);
+  async doRefresh(event) {
+    this.parties = await this.crudService.getPartyForUser(this.afAuth.auth.currentUser.email);
+    this.dataService.setPartyData(this.parties);
     setTimeout(() => {
       event.target.complete();
     }, 2000);

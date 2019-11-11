@@ -83,4 +83,8 @@ export class PartyPage implements OnInit {
   Add() {
     this.party.invitees.push({value: ''});
   }
+
+  Remove(idx) {
+    this.party.invitees.splice(idx, 1);
+  }
 }

@@ -5,14 +5,12 @@
     </ion-buttons>
     <ion-title>
       {{viewTitle}}
-      
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="parties">
   <div class="ion-padding">
-
     <calendar [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
     [currentDate]="calendar.currentDate"
@@ -21,7 +19,6 @@
     (onTitleChanged)="onViewTitleChanged($event)"
     (onTimeSelected)="onTimeSelected($event)"
     step="30">
-    
 </calendar>
 
   </div>

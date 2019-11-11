@@ -34,14 +34,18 @@
     <ion-row center>
       <ion-col text-center> 
         <ion-item *ngFor="let att of party.invitees; let idx = index">
-            <ion-label color="primary">{{idx+1}}</ion-label>
-            <ion-input type="text"  text-right  [(ngModel)]="party.invitees[idx].value"></ion-input>
-          </ion-item>
-    
-          <ion-button *ngIf="party.openParty == false" (click)="Add()">
-            <ion-icon size="small" slot="icon-only" name="person-add"></ion-icon>
-            &nbsp;Add Invitee
+          <ion-label color="primary">{{idx+1}}</ion-label>
+          <ion-input type="text"  text-right  [(ngModel)]="party.invitees[idx].value"></ion-input>
+          <ion-button *ngIf="party.openParty == false" (click)="Remove(idx)">
+            <ion-icon size="small" slot="icon-only" name="remove"></ion-icon>
+            &nbsp;Remove Invitee
           </ion-button>
+        </ion-item>
+    
+        <ion-button *ngIf="party.openParty == false" (click)="Add()">
+          <ion-icon size="small" slot="icon-only" name="person-add"></ion-icon>
+          &nbsp;Add Invitee
+        </ion-button>
       </ion-col>
     </ion-row>
     <ion-row center>
