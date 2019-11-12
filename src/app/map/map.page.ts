@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 declare var google;
 
 @Component({
+  selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss']
 })
