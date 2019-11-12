@@ -56,9 +56,5 @@ export class OpenPage {
     });
     toast.present();
   }
-  
-  diff(inv: any){
-
-  }
 }
 
