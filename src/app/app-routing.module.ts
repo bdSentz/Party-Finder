@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'open',
-    loadChildren: () => import('./open/open.module').then(m=> m.OpenPageModule)
+    loadChildren: () => import('./open/open.module').then(m => m.OpenPageModule)
   },
   {
     path: 'map',
@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'calendar',
-    loadChildren: () => import('./calendar/calendar.module').then(m=> m.CalendarPageModule)
+    loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarPageModule)
   },
   { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
   { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' }

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
-import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { Component, OnInit, ViewChild, AfterContentInit, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 declare var google;
 
@@ -9,16 +9,56 @@ declare var google;
 })
 export class MapPage implements OnInit, AfterContentInit {
 
-  @ViewChild('mapElement', {static: true}) mapElement;
+  @ViewChild('mapElement', {static: true}) mapElement: ElementRef;
   map: any;
   address: string;
+  // tslint:disable-next-line: new-parens
+  directionsService = new google.maps.DirectionsService;
+  // tslint:disable-next-line: new-parens
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  directionForm: FormGroup;
+  currentLocation: any = {
+    lat: 0,
+    lng: 0
+  };
 
-  constructor(private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
+  constructor(private fb: FormBuilder) {
+    this.createDirectionForm();
   }
 
   ngOnInit() {
   }
 
+  ngAfterContentInit(): void {
+    const map = new google.maps.Map(this.mapElement.nativeElement, {
+      zoom: 16,
+      center: {lat: 39.950384, lng: -76.728977}
+    });
+    this.directionsDisplay.setMap(map);
+  }
+
+  calculateAndDisplayRoute(formValues) {
+    const that = this;
+    this.directionsService.route({
+      origin: this.currentLocation,
+      destination: formValues.destination,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        that.directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
+
+  createDirectionForm() {
+    this.directionForm = this.fb.group({
+      destination: ['', Validators.required]
+    });
+  }
+
+  /*
   ngAfterContentInit() {
     this.loadMap();
     this.map = new google.maps.Map(
@@ -74,5 +114,5 @@ export class MapPage implements OnInit, AfterContentInit {
       .catch((error: any) => {
         this.address = 'Address Not Available!';
       });
-  }
+  }*/
 }
