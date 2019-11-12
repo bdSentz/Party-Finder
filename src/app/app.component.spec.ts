@@ -49,13 +49,14 @@ describe('AppComponent', () => {
     await fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
-    expect(menuItems.length).toEqual(5);
+    expect(menuItems.length).toEqual(6);
     expect(menuItems[0].textContent).toContain('Home');
     expect(menuItems[1].textContent).toContain('Open');
     expect(menuItems[2].textContent).toContain('Map');
     expect(menuItems[3].textContent).toContain('Party');
     expect(menuItems[4].textContent).toContain('Account');
     expect(menuItems[5].textContent).toContain('Calendar');
+  
 
   });
 
@@ -64,7 +65,7 @@ describe('AppComponent', () => {
     await fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
-    expect(menuItems.length).toEqual(5);
+    expect(menuItems.length).toEqual(6);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/home');
     expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/open');
     expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/map');

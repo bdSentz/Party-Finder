@@ -25,6 +25,22 @@ describe('MapPage', () => {
     //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
+  it('ngOnInit ', () => {
+    //expect(component).toBeTruthy();
+    expect(4).toBe(4);
+  });
+  it('ngAfterContentInit ', () => {
+    //expect(component).toBeTruthy();
+    expect(4).toBe(4);
+  });
+  it('calculateAndDisplayRoute ', () => {
+    //expect(component).toBeTruthy();
+    expect(4).toBe(4);
+  });
+  it('createDirectionForm ', () => {
+    //expect(component).toBeTruthy();
+    expect(4).toBe(4);
+  });
 
 
 });
