@@ -22,7 +22,8 @@ export class OpenPage {
     description: null,
     startTime: null,
     endTime: null,
-    openParty: null
+    openParty: null,
+    createdBy: null
   };
   account: Account =
   {

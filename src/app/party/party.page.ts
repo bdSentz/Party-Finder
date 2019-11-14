@@ -30,15 +30,20 @@ export class PartyPage implements OnInit {
     description: null,
     startTime: null,
     endTime: null,
-    openParty: false
+    openParty: false,
+    createdBy: null
   };
+
+  createdParties: Party[];
 
   // tslint:disable-next-line: max-line-length
   constructor(public helper: HelperService, private dataService: DataService, public afAuth: AngularFireAuth, private crudService: CrudService, public toastController: ToastController) {
-    afAuth.authState.subscribe(user => {
+    afAuth.authState.subscribe(async user => {
       if (user) {
         this.account = helper.getAccount(afAuth, dataService, crudService);
         this.party.address = this.account.address;
+        this.createdParties = await helper.getCreatedParties(afAuth, dataService, crudService);
+        console.log(this.createdParties);
       }
     });
   }
@@ -51,6 +56,7 @@ export class PartyPage implements OnInit {
     } else {
       record.startTime = new Date(this.party.startTime);
       record.endTime = new Date(this.party.endTime);
+      record.createdBy = this.afAuth.auth.currentUser.uid;
       this.crudService.createNewParty(record).then(resp => {
         this.presentToast(true);
         console.log(resp);
