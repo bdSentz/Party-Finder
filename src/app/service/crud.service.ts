@@ -98,7 +98,8 @@ export class CrudService {
             endTime: doc.get('endTime').toDate(),
             invitees: [],
             openParty: doc.get('openParty'),
-            createdBy: doc.get('createdBy')
+            createdBy: doc.get('createdBy'),
+            partyID: doc.id
           };
           parties.push(invite);
       });
@@ -129,7 +130,8 @@ export class CrudService {
             endTime: doc.get('endTime').toDate(),
             invitees: doc.get('invitees'),
             openParty: doc.get('openParty'),
-            createdBy: doc.get('createdBy')
+            createdBy: doc.get('createdBy'),
+            partyID: doc.id
           };
           parties.push(invite);
       });
@@ -160,7 +162,8 @@ export class CrudService {
             endTime: doc.get('endTime').toDate(),
             invitees: [],
             openParty: doc.get('openParty'),
-            createdBy: doc.get('createdBy')
+            createdBy: doc.get('createdBy'),
+            partyID: doc.id
           };
         parties.push(invite);
       });
