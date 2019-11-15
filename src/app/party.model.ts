@@ -5,4 +5,5 @@ export interface Party {
     startTime: Date;
     endTime: Date;
     openParty: boolean;
+    createdBy: string;
 }
