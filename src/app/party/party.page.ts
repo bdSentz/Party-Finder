@@ -31,7 +31,8 @@ export class PartyPage implements OnInit {
     startTime: null,
     endTime: null,
     openParty: false,
-    createdBy: null
+    createdBy: null,
+    partyID: null
   };
 
   createdParties: Party[];
@@ -92,5 +93,9 @@ export class PartyPage implements OnInit {
 
   Remove(idx) {
     this.party.invitees.splice(idx, 1);
+  }
+
+  deleteParty(partyID: string) {
+    this.crudService.deleteParty(partyID);
   }
 }

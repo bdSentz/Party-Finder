@@ -6,4 +6,5 @@ export interface Party {
     endTime: Date;
     openParty: boolean;
     createdBy: string;
+    partyID: string;
 }

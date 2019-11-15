@@ -1,3 +1,5 @@
+// Finished, only can test for the creation of the terms page 
+
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 

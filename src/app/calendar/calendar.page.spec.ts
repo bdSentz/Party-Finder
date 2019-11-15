@@ -1,13 +1,17 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { MonthViewComponent } from 'ionic2-calendar/monthview';
 import { CalendarPage } from './calendar.page';
 
 describe('CalendarPage', () => {
   let component: CalendarPage;
   let fixture: ComponentFixture<CalendarPage>;
 
-  /**
+  //fixture = TestBed.createComponent(CalendarPage);
+  
+  /*
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CalendarPage ],
@@ -15,7 +19,7 @@ describe('CalendarPage', () => {
     })
       .compileComponents();
   }));
-
+  
   beforeEach(() => {
     fixture = TestBed.createComponent(CalendarPage);
     component = fixture.componentInstance;
@@ -26,8 +30,8 @@ describe('CalendarPage', () => {
     //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('ngOnInit ', () => {
-    //expect(component).toBeTruthy();
+  it('Add new Event (TODO)', () => {
+    
     expect(4).toBe(4);
   });
   it('onViewTitleChanged ', () => {
