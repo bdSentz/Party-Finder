@@ -22,33 +22,34 @@ describe('CalendarPage', () => {
     fixture.detectChanges();
   });
   */
-  it('should create', () => {
+  it('should create ', () => {
     //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('Add new Event (TODO)', () => {
-
+  it('ngOnInit ', () => {
+    //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('On View Title Changed ', () => {
-    // Just Logs to console 
+  it('onViewTitleChanged ', () => {
+    //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('On Events Selected ', () => {
-    // Just Logs to console
+  it('onEventSelected ', () => {
+    //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('On Time Selected ', () => {
-    // Just Logs to console 
+  it('onTimeSelected ', () => {
+    //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('On Current Date Changed ', () => {
-    // Just Logs to console 
+  it('onCurrentDateChanged ', () => {
+    //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
-  it('On Range Changed ', () => {
-    // Just logs to console 
+  it('onRangeChanged ', () => {
+    //expect(component).toBeTruthy();
     expect(4).toBe(4);
   });
+  
 
 });

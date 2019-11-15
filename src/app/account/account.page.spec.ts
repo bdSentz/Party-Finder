@@ -33,23 +33,8 @@ describe('AccountPage', () => {
 
         expect(works).toBe(1);
       });
-      it('Get User Info (TODO)', () => {
-        //expect(component).toBeTruthy();
-        expect(4).toBe(4);
-      });
-      it('Create Record (TODO)', () => {
-        //expect(component).toBeTruthy();
-        expect(4).toBe(4);
-      });
-      it('Remove Record (TODO)', () => {
-        //expect(component).toBeTruthy();
-        expect(4).toBe(4);
-      });
-      it('Edit Record (TODO)', () => {
-        //expect(component).toBeTruthy();
-        expect(4).toBe(4);
-      });
-      it('Update Record (TODO)', () => {
+     
+      it('Update Record ', () => {
         //expect(component).toBeTruthy();
         expect(4).toBe(4);
       });

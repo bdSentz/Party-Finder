@@ -37,4 +37,13 @@ export class DataService {
     // tslint:disable-next-line: no-string-literal
     return this.getData('Party');
   }
+
+  setCreatedPartyData(data: Party[]) {
+    this.setData('CreatedParty', data);
+  }
+
+  getCreatedPartyData(): Party[] {
+    // tslint:disable-next-line: no-string-literal
+    return this.getData('CreatedParty');
+  }
 }

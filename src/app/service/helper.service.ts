@@ -60,4 +60,17 @@ export class HelperService {
     }
     return dataService.getPartyData();
   }
+
+  /**
+   * Helper method for getting parties the user created
+   */
+  getCreatedParties(afAuth: AngularFireAuth, dataService: DataService, crudService: CrudService): Party[] {
+    // Get user account info from singleton value if possible. Otherwise retrieve from database.
+    if (!dataService.getCreatedPartyData()) {
+      // Get account data from database for current user if it exists. If not create database document for the user
+      // Set singleton account value so other pages can access account data
+      dataService.setCreatedPartyData(crudService.getPartyCreatedByUser(afAuth.auth.currentUser.uid));
+    }
+    return dataService.getCreatedPartyData();
+  }
 }

@@ -56,4 +56,19 @@
         </ion-button>
       </ion-col>
     </ion-row>
+
+    <ion-list *ngFor="let createdParty of createdParties">
+      <ion-card>
+          <ion-card-header>
+              <ion-card-subtitle>{{helper.getStringDate(this.createdParty.startTime)}} to {{helper.getStringDate(this.createdParty.endTime)}}</ion-card-subtitle>
+              <ion-card-title>Party at {{createdParty.address}} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+              <p>{{createdParty.description}}</p>
+              <ion-list *ngFor="let invitee of createdParty.invitees">
+                <p>{{invitee.value}}</p>
+              </ion-list>
+          </ion-card-content>
+      </ion-card>
+    </ion-list>
   </ion-content>

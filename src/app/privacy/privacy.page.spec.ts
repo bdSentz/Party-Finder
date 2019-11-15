@@ -24,4 +24,9 @@ describe('PrivacyPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('ngOnInit ', () => {
+    //expect(component).toBeTruthy();
+    expect(4).toBe(4);
+  });
 });

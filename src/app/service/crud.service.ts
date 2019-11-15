@@ -97,7 +97,39 @@ export class CrudService {
             startTime: doc.get('startTime').toDate(),
             endTime: doc.get('endTime').toDate(),
             invitees: [],
-            openParty: doc.get('openParty')
+            openParty: doc.get('openParty'),
+            createdBy: doc.get('createdBy')
+          };
+          parties.push(invite);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    return parties;
+  }
+
+  /**
+   * Returns an array of parties that the user, with the given uid, created
+   */
+  getPartyCreatedByUser(uid: string): Party[] {
+    const parties: Party[] = [];
+    const col = this.firestore.collection('events');
+    const query = col.ref.where('createdBy', '==', uid);
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+          const invite: Party = {
+            address: doc.get('address'),
+            description: doc.get('description'),
+            startTime: doc.get('startTime').toDate(),
+            endTime: doc.get('endTime').toDate(),
+            invitees: doc.get('invitees'),
+            openParty: doc.get('openParty'),
+            createdBy: doc.get('createdBy')
           };
           parties.push(invite);
       });
@@ -127,7 +159,8 @@ export class CrudService {
             startTime: doc.get('startTime').toDate(),
             endTime: doc.get('endTime').toDate(),
             invitees: [],
-            openParty: doc.get('openParty')
+            openParty: doc.get('openParty'),
+            createdBy: doc.get('createdBy')
           };
         parties.push(invite);
       });
