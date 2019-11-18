@@ -12,7 +12,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
-import { NgCalendarModule  } from 'ionic2-calendar';
+import { FCMService } from '../app/service/fcm.service'
 
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -45,6 +45,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   ],
   providers: [
     StatusBar,
+    FCMService,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
