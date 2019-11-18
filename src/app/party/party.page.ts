@@ -49,17 +49,27 @@ export class PartyPage implements OnInit {
     });
   }
 
+  /**
+   * Does the necessary checks for creating a party. If the checks pass, party is created in the database.
+   */
   async CreatePartyRecord() {
     // tslint:disable-next-line: prefer-const
     let record = this.party;
-    if (record.address == null || record.description == null || record.startTime == null || record.endTime == null) {
-      this.presentToast(false);
+    // tslint:disable-next-line: max-line-length
+    if (record.address == null) {
+      this.presentToast('No address set for the party.');
+    } else if (record.description == null){
+      this.presentToast('The party must have a description.');
+    } else if (record.startTime == null || record.endTime == null) {
+      this.presentToast('Party must have a start and end time set.');
+    } else if (record.openParty === false && record.invitees.length < 1) {
+      this.presentToast('Invite only party must have valid invitees. Add invitees or make the party open.');
     } else {
       record.startTime = new Date(this.party.startTime);
       record.endTime = new Date(this.party.endTime);
       record.createdBy = this.afAuth.auth.currentUser.uid;
       this.crudService.createNewParty(record).then(resp => {
-        this.presentToast(true);
+        this.presentToast('You successfully created a party!');
         console.log(resp);
       })
       .catch(error => {
@@ -71,20 +81,16 @@ export class PartyPage implements OnInit {
   ngOnInit() {
   }
 
-  async presentToast(Bool) {
-    if (!Bool) {
-      const toast = await this.toastController.create({
-        message: 'Fill in all necessary fields',
-        duration: 2000
-      });
-      toast.present();
-    } else {
-      const toast = await this.toastController.create({
-        message: 'You successfully created a party!',
-        duration: 2000
-      });
-      toast.present();
-    }
+  /**
+   * Presents toast giving feedback for creation of a party
+   * @param text Sets the text to display depending on whether party was successfully created or not
+   */
+  async presentToast(text: string) {
+    const toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
   }
 
   Add() {
