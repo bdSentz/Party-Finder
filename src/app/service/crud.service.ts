@@ -33,7 +33,8 @@ export class CrudService {
       email: afAuth.auth.currentUser.email,
       name: afAuth.auth.currentUser.displayName,
       houseOwner: false,
-      address: ''
+      address: '',
+      groups: []
     };
     this.firestore.collection('users').doc(uid).ref.get().then(doc => {
       // If no document exists in database for the current user, create one
@@ -49,6 +50,7 @@ export class CrudService {
         account.name = doc.get('name');
         account.houseOwner = doc.get('houseOwner');
         account.address = doc.get('address');
+        account.groups = doc.get('groups');
         return account;
       }
     })
@@ -203,5 +205,65 @@ export class CrudService {
       });
     });
     return false;
+  }
+
+
+  createNewGroup(groupRecord, groupID, userID, userRecord) {
+    this.updateUser(userID, userRecord);
+    return this.firestore.collection('groups').doc(groupID).set(groupRecord);
+  }
+
+  updateGroup(groupRecord, groupID, userID, userRecord) {
+    //update group from user acc
+    this.updateUser(userID, userRecord);
+    //update groups document
+    this.firestore.doc('groups/' + groupID).update(groupRecord);
+  }
+
+  deleteGroup(groupID, userID: [], userRecord) {
+    const c = this.firestore.collection('groups').doc(groupID);
+  
+    //delete the group from each individual acc
+    const col = this.firestore.collection('users');
+    const query = col.ref.where('groups', 'array-contains', 'CS');
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+        const user: any = doc.data();
+        const groups = doc.get('groups');
+        const id = doc.id;
+        groups.groups
+            const record = {};
+            // tslint:disable-next-line: no-string-literal
+            record['groups'] = user.groups;
+            this.updateUser(id, record); 
+          })
+      });
+
+      this.firestore.doc('groups/' + groupID).delete();
+  }
+  getGroupsForUser(email: string): string[]
+  {
+    const groups: string[] = [];
+    const col = this.firestore.collection('users');
+    const query = col.ref.where('email', '==', {value: email});
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+          const group: string = doc.id;
+          groups.push(group);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    return groups;
+
   }
 }

@@ -33,7 +33,8 @@ export class OpenPage {
     email: '',
     name: '',
     houseOwner: false,
-    address: ''
+    address: '', 
+    groups: []
   };
   parties: Party[];
   joinableParties: Party[];

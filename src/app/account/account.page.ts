@@ -18,7 +18,8 @@ export class AccountPage {
     email: '',
     name: '',
     houseOwner: false,
-    address: ''
+    address: '',
+    groups: []
   };
 
   // tslint:disable-next-line: max-line-length
@@ -28,6 +29,7 @@ export class AccountPage {
         this.account = helper.getAccount(afAuth, dataService, crudService);
       }
     });
+    
   }
 
   signOut() {
@@ -47,6 +49,13 @@ export class AccountPage {
     record['address'] = this.account.address;
     // tslint:disable-next-line: no-string-literal
     record['houseOwner'] = this.account.houseOwner;
+    // tslint:disable-next-line: no-string-literal
+    record['groups'] = this.account.groups;
     this.crudService.updateUser(this.account.uid, record);
   }
+  
+  leaveGroup(group: string){
+
+  }
+
 }
