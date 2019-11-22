@@ -22,28 +22,31 @@
 </ion-content>
 
 <ion-content *ngIf="afAuth.auth.currentUser != null">
-    <ion-card class="welcome-card">
-      <img src="/assets/shapes.png" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>View Your Invites</ion-card-subtitle>
-        <ion-card-title>Welcome to Party Finder</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>View your current party invites below</p>
-      </ion-card-content>
-    </ion-card>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>  
+  <ion-card class="welcome-card">
+    <img src="/assets/shapes.png" alt="" />
+    <ion-card-header>
+      <ion-card-subtitle>View Your Invites</ion-card-subtitle>
+      <ion-card-title>Welcome to Party Finder</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>View your current party invites below</p>
+    </ion-card-content>
+  </ion-card>
 
-    <ion-list *ngFor="let party of parties">
-        <ion-card>
-            <ion-card-header>
-                <ion-card-subtitle>{{helper.getStringDate(this.party.startTime)}} to {{helper.getStringDate(this.party.endTime)}}</ion-card-subtitle>
-                <ion-card-title>Party at {{party.address}} </ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <p>{{party.description}}</p>
-                <ion-button (click)="presentToast(true, party)">Accept</ion-button>
-                <ion-button (click)="presentToast(false, party)">Decline</ion-button>
-            </ion-card-content>
-        </ion-card>
-    </ion-list>
+  <ion-list *ngFor="let party of parties">
+      <ion-card>
+          <ion-card-header>
+              <ion-card-subtitle>{{helper.getStringDate(this.party.startTime)}} to {{helper.getStringDate(this.party.endTime)}}</ion-card-subtitle>
+              <ion-card-title>Party at {{party.address}} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+              <p>{{party.description}}</p>
+              <ion-button (click)="presentToast(true, party)">Accept</ion-button>
+              <ion-button (click)="presentToast(false, party)">Decline</ion-button>
+          </ion-card-content>
+      </ion-card>
+  </ion-list>
 </ion-content>
