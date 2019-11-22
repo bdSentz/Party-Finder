@@ -4,7 +4,7 @@ import { Party } from '../party.model';
 import { CrudService } from './../service/crud.service';
 import { Account } from '../account.model';
 import { DataService } from '../service/data.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { HelperService } from '../service/helper.service';
 
 @Component({
@@ -38,7 +38,7 @@ export class PartyPage implements OnInit {
   createdParties: Party[];
 
   // tslint:disable-next-line: max-line-length
-  constructor(public helper: HelperService, private dataService: DataService, public afAuth: AngularFireAuth, private crudService: CrudService, public toastController: ToastController) {
+  constructor(public helper: HelperService, private dataService: DataService, public afAuth: AngularFireAuth, private alertCtrl: AlertController, private crudService: CrudService, public toastController: ToastController) {
     afAuth.authState.subscribe(async user => {
       if (user) {
         this.account = helper.getAccount(afAuth, dataService, crudService);
@@ -101,7 +101,29 @@ export class PartyPage implements OnInit {
     this.party.invitees.splice(idx, 1);
   }
 
-  deleteParty(partyID: string) {
-    this.crudService.deleteParty(partyID);
+  async deleteParty(partyID: string) {
+    const alert = this.alertCtrl.create({
+      message: 'Are you sure you would like to delete this invite?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Delete Party',
+          handler: async () => {
+            this.crudService.deleteParty(partyID);
+            const toast = await this.toastController.create({
+              message: 'You have deleted the invite.',
+              duration: 2000
+            });
+            toast.present();
+          }
+        }
+      ]
+    });
+    (await alert).present();
   }
 }

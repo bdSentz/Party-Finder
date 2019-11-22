@@ -69,10 +69,14 @@
                 <p>{{invitee.value}}</p>
               </ion-list>
           </ion-card-content>
-          <ion-button (click)="deleteParty(createdParty.partyID)">
-            <ion-icon size="small" slot="icon-only" name="remove"></ion-icon>
-            &nbsp;Delete Party
-          </ion-button>
+          <ion-row center>
+            <ion-col text-center> 
+              <ion-button (click)="deleteParty(createdParty.partyID)">
+                <ion-icon size="small" slot="icon-only" name="remove"></ion-icon>
+                &nbsp;Delete Party
+              </ion-button>
+            </ion-col>
+          </ion-row>
       </ion-card>
     </ion-list>
   </ion-content>
