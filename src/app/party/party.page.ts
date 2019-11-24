@@ -70,6 +70,7 @@ export class PartyPage implements OnInit {
       record.createdBy = this.afAuth.auth.currentUser.uid;
       this.crudService.createNewParty(record).then(resp => {
         this.presentToast('You successfully created a party!');
+        this.reload();
         console.log(resp);
       })
       .catch(error => {
@@ -99,6 +100,10 @@ export class PartyPage implements OnInit {
 
   Remove(idx) {
     this.party.invitees.splice(idx, 1);
+  }
+
+  reload() {
+    window.location.reload();
   }
 
   async deleteParty(partyID: string) {
