@@ -12,9 +12,6 @@
   <ion-content *ngIf="account.email != null" fullscreen>
     <ion-list>
       <ion-item>
-        <ion-input disabled="true" placeholder="Location" [(ngModel)]="party.address"></ion-input>
-      </ion-item>
-      <ion-item>
           <ion-label>Start</ion-label>
           <ion-datetime displayFormat="MMM/D/YYYY HH:mm" pickerFormat="MMM D:HH:mm" placeholder="Start Time" [(ngModel)]="party.startTime"></ion-datetime>
         </ion-item>
@@ -32,7 +29,7 @@
     </ion-list>
 
     <ion-row center>
-      <ion-col text-center> 
+      <ion-col text-center *ngIf= "party.openParty == false"> 
         <ion-item *ngFor="let att of party.invitees; let idx = index">
           <ion-label color="primary">{{idx+1}}</ion-label>
           <ion-input type="text"  text-right  [(ngModel)]="party.invitees[idx].value"></ion-input>
