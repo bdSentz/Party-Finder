@@ -58,7 +58,7 @@ export class PartyPage implements OnInit {
     // tslint:disable-next-line: max-line-length
     if (record.address == null) {
       this.presentToast('No address set for the party.');
-    } else if (record.description == null){
+    } else if (record.description == null) {
       this.presentToast('The party must have a description.');
     } else if (record.startTime == null || record.endTime == null) {
       this.presentToast('Party must have a start and end time set.');

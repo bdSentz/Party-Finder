@@ -10,44 +10,39 @@
   </ion-header>
   
   <ion-content *ngIf="account.email != null">
-    <ion-item-divider>
-        <ion-label>
-          {{account.name}}
+    <ion-list>
+      <ion-item>    
+        <ion-label>House Owner</ion-label>
+        <ion-toggle [(ngModel)]="account.houseOwner"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="account.houseOwner == true"><ion-input placeholder="Address" [(ngModel)]="account.address"></ion-input></ion-item>
+      <ion-item>
+        <ion-label>Groups: 
+          <ion-item-group>
+            <ion-item>
+              <ion-label>
+                <h3>KDR</h3>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Ultimate Frisbee Club</h3>
+              </ion-label>
+            </ion-item>
+          </ion-item-group>
         </ion-label>
-      </ion-item-divider>
-      <ion-list>
-        <ion-item><ion-label>Email:         {{account.email}}</ion-label></ion-item>
-        <ion-item>    
-          <ion-label>House Owner</ion-label>
-          <ion-toggle [(ngModel)]="account.houseOwner"></ion-toggle>
-        </ion-item>
-        <ion-item *ngIf="account.houseOwner == true"><ion-input placeholder="Address" [(ngModel)]="account.address"></ion-input></ion-item>
-        <ion-item><ion-label>Groups: 
-            <ion-item-group>
-                <ion-item>
-                    <ion-label>
-                        <h3>KDR</h3>
-                    </ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label>
-                        <h3>Ultimate Frisbee Club</h3>
-                    </ion-label>
-                </ion-item>
-            </ion-item-group>
-        </ion-label>
-    </ion-item>
-</ion-list>
-<ion-row center>  
-  <ion-col text-center>   
-    <ion-button (click)="UpdateRecord()">
-      <ion-icon size="small" slot="icon-only" name="save"></ion-icon>
-      &nbsp;Save
-    </ion-button>
-    <ion-button [routerLink]="['/home']" (click)="signOut()">
+      </ion-item>
+    </ion-list>
+  <ion-row center>  
+    <ion-col text-center>   
+      <ion-button (click)="UpdateRecord()">
+        <ion-icon size="small" slot="icon-only" name="save"></ion-icon>
+        &nbsp;Save
+      </ion-button>
+      <ion-button [routerLink]="['/home']" (click)="signOut()">
       <ion-icon size="small" slot="icon-only" name="log-out"></ion-icon>
       &nbsp;Log Out
-    </ion-button>
-  </ion-col> 
-</ion-row>
+      </ion-button>
+    </ion-col> 
+  </ion-row>
 </ion-content>
