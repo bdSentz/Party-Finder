@@ -13,7 +13,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { FCMService } from '../app/service/fcm.service'
-
+import { NgxNavigationWithDataComponent } from "ngx-navigation-with-data";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -44,6 +44,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
   providers: [
+    NgxNavigationWithDataComponent,
     StatusBar,
     FCMService,
     SplashScreen,

@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Party } from '../party.model';
 import { Account } from '../account.model';
 import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { Group } from '../group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -246,19 +247,27 @@ export class CrudService {
 
       this.firestore.doc('groups/' + groupID).delete();
   }
-  getGroupsForUser(email: string): string[]
+  getGroup(name: string): Group
   {
-    const groups: string[] = [];
-    const col = this.firestore.collection('users');
-    const query = col.ref.where('email', '==', {value: email});
+    let groups: Group = {
+      members: [],
+        creatorID: '',
+        groupName: ''
+    };
+    const col = this.firestore.collection('groups');
+    const query = col.ref.where('groupName', '==', name);
     query.get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');
       }
       snapshot.forEach(doc => {
-          const group: string = doc.id;
-          groups.push(group);
+          const group: Group = {
+            members: doc.get('members'),
+            creatorID: doc.get('creatorID'),
+            groupName: doc.get('groupName')
+          }
+          groups = group;
       });
     })
     .catch(err => {
@@ -267,4 +276,29 @@ export class CrudService {
     return groups;
 
   }
+
+  getCreatedGroups(uid: string): Group[] {
+    let groups: Group[] = [];
+    const col = this.firestore.collection('groups');
+    const query = col.ref.where('creatorID', '==', uid);
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+          const group: Group = {
+            members: doc.get('members'),
+            creatorID: doc.get('creatorID'),
+            groupName: doc.get('groupName')
+          }
+          groups.push(group);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    return groups;
+  }
+
 }

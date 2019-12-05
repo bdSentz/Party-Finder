@@ -4,6 +4,8 @@ import { Account } from '../account.model';
 import { CrudService } from './../service/crud.service';
 import { DataService } from './../service/data.service';
 import { HelperService } from '../service/helper.service';
+import { Group } from '../group.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-account',
@@ -23,7 +25,7 @@ export class AccountPage {
   };
 
   // tslint:disable-next-line: max-line-length
-  constructor(public afAuth: AngularFireAuth, public helper: HelperService, private crudService: CrudService, private dataService: DataService) {
+  constructor(public router: Router, public afAuth: AngularFireAuth, public helper: HelperService, private crudService: CrudService, private dataService: DataService) {
     afAuth.authState.subscribe(user => {
       if (user) {
         this.account = helper.getAccount(afAuth, dataService, crudService);
@@ -54,7 +56,7 @@ export class AccountPage {
     this.crudService.updateUser(this.account.uid, record);
   }
   
-  leaveGroup(group: string){
+  editGroup(group: Group){
 
   }
 

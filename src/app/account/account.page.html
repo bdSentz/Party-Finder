@@ -24,14 +24,11 @@
         <ion-item *ngIf="account.houseOwner == true"><ion-input placeholder="Address" [(ngModel)]="account.address"></ion-input></ion-item>
         <ion-item><ion-label>Groups:  
             <ion-item-group>
-                <ion-list >
-                    <ion-item>
-                      <ion-label>{{account.groups}} </ion-label>
+                <ion-list>
+                    <ion-item *ngFor= "let group of account.groups; let idx = index">
+                      <ion-label>{{group}} </ion-label>
                     </ion-item>
-                    <ion-button (click)= "editGroup(group)" >
-                        <ion-icon name="leave" ></ion-icon>
-                        &nbsp; Edit Group
-                      </ion-button>
+                    
                   </ion-list>            
             </ion-item-group>
             <ion-row right>
@@ -41,6 +38,10 @@
                     &nbsp;Create New Group
                   </ion-button>
                 </ion-col>
+                <ion-button [routerLink]="['/editgroup']" (click)= "editGroup(group)" >
+                  <ion-icon name="leave" ></ion-icon>
+                  &nbsp; Edit My Groups
+                </ion-button>
               </ion-row>
         </ion-label>
         
