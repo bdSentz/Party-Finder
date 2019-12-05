@@ -77,9 +77,9 @@ export class GroupPage {
         this.initializeItems();
       
         const search = evt.detail.value;
-        let ul = document.getElementById("myUL");
-        let p = ul.getElementsByTagName("p");
-        
+        console.log(search);
+        console.log(this.emails);
+       document.getElementById("results").style.display = "block";
         this.emails = this.emails.filter(email => {
           if (email && search) {
             if (email.toLowerCase().indexOf(search.toLowerCase()) > -1) {
