@@ -60,6 +60,7 @@ export class CrudService {
     return account;
   }
 
+
   updateUser(recordID, record) {
     this.firestore.doc('users/' + recordID).update(record);
   }
@@ -208,9 +209,9 @@ export class CrudService {
   }
 
 
-  createNewGroup(groupRecord, groupID, userID, userRecord) {
+  createNewGroup(groupRecord, userID, userRecord) {
     this.updateUser(userID, userRecord);
-    return this.firestore.collection('groups').doc(groupID).set(groupRecord);
+    return this.firestore.collection('groups').add(groupRecord);
   }
 
   updateGroup(groupRecord, groupID, userID, userRecord) {

@@ -58,4 +58,8 @@ export class AccountPage {
 
   }
 
+  createGroup(){
+    
+  }
+
 }

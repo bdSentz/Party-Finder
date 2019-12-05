@@ -28,21 +28,22 @@
                     <ion-item>
                       <ion-label>{{account.groups}} </ion-label>
                     </ion-item>
+                    <ion-button (click)= "editGroup(group)" >
+                        <ion-icon name="leave" ></ion-icon>
+                        &nbsp; Edit Group
+                      </ion-button>
                   </ion-list>            
             </ion-item-group>
             <ion-row right>
                 <ion-col text-center>
-                  <ion-button  (click)= "createGroup()">
+                  <ion-button [routerLink]="['/group']" (click)= "createGroup()">
                     <ion-icon size="small" name="createGroup" ></ion-icon>
                     &nbsp;Create New Group
                   </ion-button>
                 </ion-col>
               </ion-row>
         </ion-label>
-        <ion-button (click)= "leaveGroup(group)" >
-            <ion-icon name="leave" ></ion-icon>
-            &nbsp; Leave Group
-          </ion-button>
+        
     </ion-item>
     
 </ion-list>
