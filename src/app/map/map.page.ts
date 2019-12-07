@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, AfterContentInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentInit, ElementRef, SystemJsNgModuleLoader } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 declare var google;
 
@@ -12,19 +13,24 @@ export class MapPage implements OnInit, AfterContentInit {
 
   @ViewChild('mapElement', {static: true}) mapElement: ElementRef;
   map: any;
-  address: string;
+  destination: string;
   // tslint:disable-next-line: new-parens
   directionsService = new google.maps.DirectionsService;
   // tslint:disable-next-line: new-parens
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionForm: FormGroup;
   currentLocation: any = {
-    lat: 0,
-    lng: 0
+    lat: 39.950384,
+    lng: -76.728977
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
     this.createDirectionForm();
+    this.route.queryParams.subscribe(async params => {
+      if (params) {
+        this.destination = params.location;
+      }
+    });
   }
 
   ngOnInit() {
