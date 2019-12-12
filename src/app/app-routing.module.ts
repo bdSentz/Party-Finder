@@ -31,6 +31,14 @@ const routes: Routes = [
     path: 'calendar',
     loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarPageModule)
   },
+  {
+    path: 'group',
+    loadChildren: () =>import('./group/group.module').then(m => m.GroupPageModule)
+  },
+  {
+    path: 'editgroup',
+    loadChildren: () =>import('./group/editgroup.module').then(m => m.EditGroupPageModule)
+  },
   { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
   { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' }
 ];

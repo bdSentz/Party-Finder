@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Party } from '../party.model';
 import { Account } from '../account.model';
 import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { Group } from '../group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,8 @@ export class CrudService {
       email: afAuth.auth.currentUser.email,
       name: afAuth.auth.currentUser.displayName,
       houseOwner: false,
-      address: ''
+      address: '',
+      groups: []
     };
     this.firestore.collection('users').doc(uid).ref.get().then(doc => {
       // If no document exists in database for the current user, create one
@@ -49,6 +51,7 @@ export class CrudService {
         account.name = doc.get('name');
         account.houseOwner = doc.get('houseOwner');
         account.address = doc.get('address');
+        account.groups = doc.get('groups');
         return account;
       }
     })
@@ -57,6 +60,7 @@ export class CrudService {
     });
     return account;
   }
+
 
   updateUser(recordID, record) {
     this.firestore.doc('users/' + recordID).update(record);
@@ -186,17 +190,115 @@ export class CrudService {
         const event: any = doc.data();
         const id = doc.id;
         if (selectedParty.address === event.address && selectedParty.description === event.description) {
-          if (!event.invitees.includes(email)) {
-            event.invitees = event.invitees.concat(email);
+          if (!(email in selectedParty.invitees)) {
+            event.invitees.push({
+              value: email
+            });
             const record = {};
             // tslint:disable-next-line: no-string-literal
             record['invitees'] = event.invitees;
             this.updateParty(id, record);
             return true;
           }
+          else{
+            return false;
+          }
         }
       });
     });
     return false;
   }
+
+
+  createNewGroup(groupRecord, userID, userRecord) {
+    this.updateUser(userID, userRecord);
+    return this.firestore.collection('groups').add(groupRecord);
+  }
+
+  updateGroup(groupRecord, groupID, userID, userRecord) {
+    //update group from user acc
+    this.updateUser(userID, userRecord);
+    //update groups document
+    this.firestore.doc('groups/' + groupID).update(groupRecord);
+  }
+
+  deleteGroup(groupID, userID: [], userRecord) {
+    const c = this.firestore.collection('groups').doc(groupID);
+  
+    //delete the group from each individual acc
+    const col = this.firestore.collection('users');
+    const query = col.ref.where('groups', 'array-contains', 'CS');
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+        const user: any = doc.data();
+        const groups = doc.get('groups');
+        const id = doc.id;
+        groups.groups
+            const record = {};
+            // tslint:disable-next-line: no-string-literal
+            record['groups'] = user.groups;
+            this.updateUser(id, record); 
+          })
+      });
+
+      this.firestore.doc('groups/' + groupID).delete();
+  }
+  getGroup(name: string): Group
+  {
+    let groups: Group = {
+      members: [],
+        creatorID: '',
+        groupName: ''
+    };
+    const col = this.firestore.collection('groups');
+    const query = col.ref.where('groupName', '==', name);
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+          const group: Group = {
+            members: doc.get('members'),
+            creatorID: doc.get('creatorID'),
+            groupName: doc.get('groupName')
+          }
+          groups = group;
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    return groups;
+
+  }
+
+  getCreatedGroups(uid: string): Group[] {
+    let groups: Group[] = [];
+    const col = this.firestore.collection('groups');
+    const query = col.ref.where('creatorID', '==', uid);
+    query.get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+          const group: Group = {
+            members: doc.get('members'),
+            creatorID: doc.get('creatorID'),
+            groupName: doc.get('groupName')
+          }
+          groups.push(group);
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    return groups;
+  }
+
 }

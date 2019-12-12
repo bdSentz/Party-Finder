@@ -7,6 +7,7 @@ import { HelperService } from '../service/helper.service';
 import { DataService } from '../service/data.service';
 import { ToastController } from '@ionic/angular';
 import { Account } from '../account.model';
+import { PartyPage } from '../party/party.page';
 
 @Component({
   templateUrl: 'open.page.html',
@@ -32,19 +33,20 @@ export class OpenPage {
     email: '',
     name: '',
     houseOwner: false,
-    address: ''
+    address: '', 
+    groups: []
   };
   parties: Party[];
   joinableParties: Party[];
   joinedParties: Party[];
-
   // tslint:disable-next-line: max-line-length
   constructor(private db: AngularFirestore, public afAuth: AngularFireAuth, private crudService: CrudService, public toastController: ToastController, private dataService: DataService, public helper: HelperService) {
     this.account.email = this.afAuth.auth.currentUser.email;
-    this.joinableParties = this.crudService.getOpenParties();
+    this.joinableParties = this.crudService.getOpenParties();    
   }
 
   joinParty(party: Party) {
+    console.log(party.invitees);
     if (this.crudService.rsvpOpenParty(party, this.account.email)) {
       this.presentToast();
     }

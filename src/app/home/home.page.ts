@@ -23,7 +23,8 @@ export class HomePage {
     email: '',
     name: '',
     houseOwner: false,
-    address: ''
+    address: '',
+    groups: []
   };
 
   parties: Party[];

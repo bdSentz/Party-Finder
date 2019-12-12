@@ -1,0 +1,40 @@
+<ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>
+            Create New Group
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-input placeholder="Group Name" [(ngModel)]="group.groupName"></ion-input>
+        </ion-item>
+    </ion-list>
+    <h1>Add Group Members</h1>
+    <ion-searchbar animated="true" placeholder="Search Users" showCancelButton="focus" (ionChange)="filterList($event)"
+        inputmode="email" type="email" autocomplete="on" debounce="100"></ion-searchbar>
+    <ion-list id = "results" style="display: none">
+            <p><ion-item *ngFor= "let mem of emails; let idx = index">
+              <ion-label> {{ mem }} <ion-button (click)="Add(mem, idx)">
+                    <ion-icon size="small" slot="icon-only" name="person-add"></ion-icon>
+                    &nbsp;Add
+                  </ion-button></ion-label>
+            </ion-item>
+            </p>
+    </ion-list>
+
+
+    <ion-button [routerLink]="['/account']" (click)= "createGroup()">
+        <ion-icon size="small" name="createGroup" ></ion-icon>
+        &nbsp;Create New Group
+      </ion-button>
+
+
+</ion-content>
+

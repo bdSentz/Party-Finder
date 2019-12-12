@@ -20,7 +20,8 @@ export class PartyPage implements OnInit {
     email: '',
     name: '',
     houseOwner: false,
-    address: ''
+    address: '',
+    groups: []
   };
 
   party: Party =

@@ -4,4 +4,5 @@ export interface Account {
     name: string;
     houseOwner: boolean;
     address: string;
+    groups: string[];
 }
