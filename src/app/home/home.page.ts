@@ -8,6 +8,7 @@ import { CrudService } from './../service/crud.service';
 import { DataService } from './../service/data.service';
 import { HelperService } from './../service/helper.service';
 import { Party } from '../party.model';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomePage {
   parties: Party[];
 
   // tslint:disable-next-line: max-line-length
-  constructor(public toastController: ToastController, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService, public helper: HelperService, public navCtrl: NavController, private alertCtrl: AlertController) {
+  constructor(public toastController: ToastController, private router: Router, public afAuth: AngularFireAuth, private crudService: CrudService, private dataService: DataService, public helper: HelperService, public navCtrl: NavController, private alertCtrl: AlertController) {
     afAuth.authState.subscribe(user => {
       if (user) {
         this.account = helper.getAccount(afAuth, dataService, crudService);
@@ -56,6 +57,7 @@ export class HomePage {
         duration: 2000
       });
       toast.present();
+      this.go(party.address);
     } else {
       const alert = this.alertCtrl.create({
         message: 'Are you sure you would like to decline this invite?',
@@ -80,5 +82,15 @@ export class HomePage {
       });
       (await alert).present();
     }
+  }
+
+  go(partyLocation: string) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        location: partyLocation
+      }
+    };
+    console.log(partyLocation);
+    this.router.navigate(['map'], navigationExtras);
   }
 }
